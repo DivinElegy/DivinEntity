@@ -1,0 +1,37 @@
+<ActorFrame><children>
+<Actor
+	File='4th.sprite'
+	InitCommand='%function (self)
+		noteskin_4_0_4 = self;
+		self:rotationz(90);
+	end'
+/>
+<Actor
+	File='4th.sprite'
+	InitCommand='%function (self)
+		noteskin_4_0_3 = self;
+		self:rotationz(90);
+	end'
+/>
+<Actor
+	File='4th.sprite'
+	InitCommand='%function (self)
+		noteskin_4_0_2 = self;
+		self:rotationz(90);
+	end'
+/>
+<Actor
+	File='4th.sprite'
+	InitCommand='%function (self)
+		noteskin_4_0_1 = self;
+		self:rotationz(90);
+	end'
+/>
+<Actor
+	File='4th.sprite'
+	InitCommand='%function (self)
+		noteskin_4_0_0 = self;
+		self:rotationz(90);
+	end'
+/>
+</children></ActorFrame>

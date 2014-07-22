@@ -1,0 +1,325 @@
+<!-- "effectoffset,0.05" start the flash 5% before the beat -->
+<ActorFrame><children>
+<ActorFrame 
+InitCommand="%function(self)
+UzCheckMetalClassicTaro = 0;
+self:z(0);
+if UGenerationA == nil then UGenerationA = 0; end
+if UGenerationA == 2 then UGenerationA = 0; end
+if UGenerationA == 0 then
+	self:z(1);
+	UGenerationA = UGenerationA + 1;
+	else
+	UGenerationA = UGenerationA + 1;
+	end
+end"
+
+W1Command="%function(self) RzCheckMetalClassicTaro = self:GetZ(); if RzCheckMetalClassicTaro > 0 then
+if GAMESTATE:IsPlayerEnabled(PLAYER_1) then MESSAGEMAN:Broadcast('W1P1Up'); MESSAGEMAN:Broadcast('W1P1'); else
+MESSAGEMAN:Broadcast('W1P2Up'); MESSAGEMAN:Broadcast('W1P2'); end else MESSAGEMAN:Broadcast('W1P2Up'); MESSAGEMAN:Broadcast('W1P2'); end end"
+
+W2Command="%function(self) RzCheckMetalClassicTaro = self:GetZ(); if RzCheckMetalClassicTaro > 0 then
+if GAMESTATE:IsPlayerEnabled(PLAYER_1) then MESSAGEMAN:Broadcast('W2P1Up'); MESSAGEMAN:Broadcast('W2P1'); else
+MESSAGEMAN:Broadcast('W2P2Up'); MESSAGEMAN:Broadcast('W2P2'); end else MESSAGEMAN:Broadcast('W2P2Up'); MESSAGEMAN:Broadcast('W2P2'); end end"
+
+W3Command="%function(self) RzCheckMetalClassicTaro = self:GetZ(); if RzCheckMetalClassicTaro > 0 then
+if GAMESTATE:IsPlayerEnabled(PLAYER_1) then MESSAGEMAN:Broadcast('W3P1Up'); MESSAGEMAN:Broadcast('W3P1'); else
+MESSAGEMAN:Broadcast('W3P2Up'); MESSAGEMAN:Broadcast('W3P2'); end else MESSAGEMAN:Broadcast('W3P2Up'); MESSAGEMAN:Broadcast('W3P2'); end end"
+
+W4Command="%function(self) RzCheckMetalClassicTaro = self:GetZ(); if RzCheckMetalClassicTaro > 0 then
+if GAMESTATE:IsPlayerEnabled(PLAYER_1) then MESSAGEMAN:Broadcast('W4P1Up'); MESSAGEMAN:Broadcast('W4P1'); else
+MESSAGEMAN:Broadcast('W4P2Up'); MESSAGEMAN:Broadcast('W4P2'); end else MESSAGEMAN:Broadcast('W4P2Up'); MESSAGEMAN:Broadcast('W4P2'); end end"
+
+W5Command="%function(self) RzCheckMetalClassicTaro = self:GetZ(); if RzCheckMetalClassicTaro > 0 then
+if GAMESTATE:IsPlayerEnabled(PLAYER_1) then MESSAGEMAN:Broadcast('W5P1Up'); MESSAGEMAN:Broadcast('W5P1'); else
+MESSAGEMAN:Broadcast('W5P2Up'); MESSAGEMAN:Broadcast('W5P2'); end else MESSAGEMAN:Broadcast('W5P2Up'); MESSAGEMAN:Broadcast('W5P2'); end end"
+
+W6Command="%function(self) RzCheckMetalClassicTaro = self:GetZ(); if RzCheckMetalClassicTaro > 0 then
+if GAMESTATE:IsPlayerEnabled(PLAYER_1) then MESSAGEMAN:Broadcast('MissP1Up'); MESSAGEMAN:Broadcast('MissP1'); else
+MESSAGEMAN:Broadcast('MissP2Up'); MESSAGEMAN:Broadcast('MissP2'); end else MESSAGEMAN:Broadcast('MissP2Up'); MESSAGEMAN:Broadcast('MissP2'); end end"
+
+PressCommand="%function(self)
+UzCheckMetalClassicTaro = self:GetZ();
+if UzCheckMetalClassicTaro > 0 then
+	if GAMESTATE:IsPlayerEnabled(PLAYER_1) then
+		UpressP1 = 1;
+		else
+		UpressP2 = 1;
+		end
+else
+	UpressP2 = 1;
+end
+end"
+
+LiftCommand="%function(self)
+UzCheckMetalClassicTaro = self:GetZ();
+if UzCheckMetalClassicTaro > 0 then
+	if GAMESTATE:IsPlayerEnabled(PLAYER_1) then
+		UpressP1 = 0;
+		else
+		UpressP2 = 0;
+		end
+else
+	UpressP2 = 0;
+end
+end"
+><children>
+	
+	<ActorFrame InitCommand="%function(self)
+		receptor_x_2_4 = 0
+		receptor_y_2_4 = 0
+		receptor_z_2_4 = 0
+		receptor_rotationx_2_4 = 0
+		receptor_rotationy_2_4 = 0
+		receptor_rotationz_2_4 = 0
+		receptor_zoomx_2_4 = 1
+		receptor_zoomy_2_4 = 1
+		receptor_zoomz_2_4 = 1
+		receptor_fadetop_2_4 = 0
+		receptor_fadebottom_2_4 = 0
+		receptor_fadeleft_2_4 = 0
+		receptor_faderight_2_4 = 0
+		receptor_croptop_2_4 = 0
+		receptor_cropbottom_2_4 = 0
+		receptor_cropleft_2_4 = 0
+		receptor_cropright_2_4 = 0
+		self:sleep(0); self:queuecommand('Update')
+	end"
+	UpdateCommand="%function(self)
+		self:x(receptor_x_2_4)
+		self:y(receptor_y_2_4)
+		self:z(receptor_z_2_4)
+		self:rotationx(receptor_rotationx_2_4)
+		self:rotationy(receptor_rotationy_2_4)
+		self:rotationz(receptor_rotationz_2_4)
+		self:zoomx(receptor_zoomx_2_4)
+		self:zoomy(receptor_zoomy_2_4)
+		self:zoomz(receptor_zoomz_2_4)
+		self:fadetop(receptor_fadetop_2_4)
+		self:fadebottom(receptor_fadebottom_2_4)
+		self:fadeleft(receptor_fadeleft_2_4)
+		self:faderight(receptor_faderight_2_4)
+		self:croptop(receptor_croptop_2_4)
+		self:cropbottom(receptor_cropbottom_2_4)
+		self:cropleft(receptor_cropleft_2_4)
+		self:cropright(receptor_cropright_2_4)
+		self:sleep(0.05); self:queuecommand('Update')
+	end"><children>
+		<Sprite Texture="_Down Receptor tex" Frame0000="0" Delay0000="0.95" Frame0001="1" Delay0001="1"
+			Frame0002="2" Delay0002="1" Frame0003="3" Delay0003="1" Frame0004="0" Delay0004="0.05"
+			InitCommand="x,0;rotationz,180;EffectClock,beat;DiffuseRamp;
+			EffectColor1,0.4,0.4,0.4,1;EffectColor2,1,1,1,1,1;effectperiod,0.5;EffectDelay,0.5;EffectOffset,0.05"
+		/>
+		<Sprite Texture="_Down Receptor tex" Frame0000="0" Delay0000="0.95" Frame0001="1" Delay0001="1"
+			Frame0002="2" Delay0002="1" Frame0003="3" Delay0003="1" Frame0004="0" Delay0004="0.05"
+			InitCommand="x,0;rotationz,180;blend,add;diffusealpha,0"
+			LiftCommand="diffusealpha,0"
+		/>
+	</children></ActorFrame>
+	<ActorFrame InitCommand="%function(self)
+		receptor_x_2_3 = 0
+		receptor_y_2_3 = 0
+		receptor_z_2_3 = 0
+		receptor_rotationx_2_3 = 0
+		receptor_rotationy_2_3 = 0
+		receptor_rotationz_2_3 = 0
+		receptor_zoomx_2_3 = 1
+		receptor_zoomy_2_3 = 1
+		receptor_zoomz_2_3 = 1
+		receptor_fadetop_2_3 = 0
+		receptor_fadebottom_2_3 = 0
+		receptor_fadeleft_2_3 = 0
+		receptor_faderight_2_3 = 0
+		receptor_croptop_2_3 = 0
+		receptor_cropbottom_2_3 = 0
+		receptor_cropleft_2_3 = 0
+		receptor_cropright_2_3 = 0
+		self:sleep(0); self:queuecommand('Update')
+	end"
+	UpdateCommand="%function(self)
+		self:x(receptor_x_2_3)
+		self:y(receptor_y_2_3)
+		self:z(receptor_z_2_3)
+		self:rotationx(receptor_rotationx_2_3)
+		self:rotationy(receptor_rotationy_2_3)
+		self:rotationz(receptor_rotationz_2_3)
+		self:zoomx(receptor_zoomx_2_3)
+		self:zoomy(receptor_zoomy_2_3)
+		self:zoomz(receptor_zoomz_2_3)
+		self:fadetop(receptor_fadetop_2_3)
+		self:fadebottom(receptor_fadebottom_2_3)
+		self:fadeleft(receptor_fadeleft_2_3)
+		self:faderight(receptor_faderight_2_3)
+		self:croptop(receptor_croptop_2_3)
+		self:cropbottom(receptor_cropbottom_2_3)
+		self:cropleft(receptor_cropleft_2_3)
+		self:cropright(receptor_cropright_2_3)
+		self:sleep(0.05); self:queuecommand('Update')
+	end"><children>
+		<Sprite Texture="_Down Receptor tex" Frame0000="0" Delay0000="0.95" Frame0001="1" Delay0001="1"
+			Frame0002="2" Delay0002="1" Frame0003="3" Delay0003="1" Frame0004="0" Delay0004="0.05"
+			InitCommand="x,0;rotationz,180;EffectClock,beat;DiffuseRamp;
+			EffectColor1,0.4,0.4,0.4,1;EffectColor2,1,1,1,1,1;effectperiod,0.5;EffectDelay,0.5;EffectOffset,0.05"
+		/>
+		<Sprite Texture="_Down Receptor tex" Frame0000="0" Delay0000="0.95" Frame0001="1" Delay0001="1"
+			Frame0002="2" Delay0002="1" Frame0003="3" Delay0003="1" Frame0004="0" Delay0004="0.05"
+			InitCommand="x,0;rotationz,180;blend,add;diffusealpha,0"
+			LiftCommand="diffusealpha,0"
+		/>
+	</children></ActorFrame>
+	<ActorFrame InitCommand="%function(self)
+		receptor_x_2_2 = 0
+		receptor_y_2_2 = 0
+		receptor_z_2_2 = 0
+		receptor_rotationx_2_2 = 0
+		receptor_rotationy_2_2 = 0
+		receptor_rotationz_2_2 = 0
+		receptor_zoomx_2_2 = 1
+		receptor_zoomy_2_2 = 1
+		receptor_zoomz_2_2 = 1
+		receptor_fadetop_2_2 = 0
+		receptor_fadebottom_2_2 = 0
+		receptor_fadeleft_2_2 = 0
+		receptor_faderight_2_2 = 0
+		receptor_croptop_2_2 = 0
+		receptor_cropbottom_2_2 = 0
+		receptor_cropleft_2_2 = 0
+		receptor_cropright_2_2 = 0
+		self:sleep(0); self:queuecommand('Update')
+	end"
+	UpdateCommand="%function(self)
+		self:x(receptor_x_2_2)
+		self:y(receptor_y_2_2)
+		self:z(receptor_z_2_2)
+		self:rotationx(receptor_rotationx_2_2)
+		self:rotationy(receptor_rotationy_2_2)
+		self:rotationz(receptor_rotationz_2_2)
+		self:zoomx(receptor_zoomx_2_2)
+		self:zoomy(receptor_zoomy_2_2)
+		self:zoomz(receptor_zoomz_2_2)
+		self:fadetop(receptor_fadetop_2_2)
+		self:fadebottom(receptor_fadebottom_2_2)
+		self:fadeleft(receptor_fadeleft_2_2)
+		self:faderight(receptor_faderight_2_2)
+		self:croptop(receptor_croptop_2_2)
+		self:cropbottom(receptor_cropbottom_2_2)
+		self:cropleft(receptor_cropleft_2_2)
+		self:cropright(receptor_cropright_2_2)
+		self:sleep(0.05); self:queuecommand('Update')
+	end"><children>
+		<Sprite Texture="_Down Receptor tex" Frame0000="0" Delay0000="0.95" Frame0001="1" Delay0001="1"
+			Frame0002="2" Delay0002="1" Frame0003="3" Delay0003="1" Frame0004="0" Delay0004="0.05"
+			InitCommand="x,0;rotationz,180;EffectClock,beat;DiffuseRamp;
+			EffectColor1,0.4,0.4,0.4,1;EffectColor2,1,1,1,1,1;effectperiod,0.5;EffectDelay,0.5;EffectOffset,0.05"
+		/>
+		<Sprite Texture="_Down Receptor tex" Frame0000="0" Delay0000="0.95" Frame0001="1" Delay0001="1"
+			Frame0002="2" Delay0002="1" Frame0003="3" Delay0003="1" Frame0004="0" Delay0004="0.05"
+			InitCommand="x,0;rotationz,180;blend,add;diffusealpha,0"
+			LiftCommand="diffusealpha,0"
+		/>
+	</children></ActorFrame>
+	<ActorFrame InitCommand="%function(self)
+		receptor_x_2_1 = 0
+		receptor_y_2_1 = 0
+		receptor_z_2_1 = 0
+		receptor_rotationx_2_1 = 0
+		receptor_rotationy_2_1 = 0
+		receptor_rotationz_2_1 = 0
+		receptor_zoomx_2_1 = 1
+		receptor_zoomy_2_1 = 1
+		receptor_zoomz_2_1 = 1
+		receptor_fadetop_2_1 = 0
+		receptor_fadebottom_2_1 = 0
+		receptor_fadeleft_2_1 = 0
+		receptor_faderight_2_1 = 0
+		receptor_croptop_2_1 = 0
+		receptor_cropbottom_2_1 = 0
+		receptor_cropleft_2_1 = 0
+		receptor_cropright_2_1 = 0
+		self:sleep(0); self:queuecommand('Update')
+	end"
+	UpdateCommand="%function(self)
+		self:x(receptor_x_2_1)
+		self:y(receptor_y_2_1)
+		self:z(receptor_z_2_1)
+		self:rotationx(receptor_rotationx_2_1)
+		self:rotationy(receptor_rotationy_2_1)
+		self:rotationz(receptor_rotationz_2_1)
+		self:zoomx(receptor_zoomx_2_1)
+		self:zoomy(receptor_zoomy_2_1)
+		self:zoomz(receptor_zoomz_2_1)
+		self:fadetop(receptor_fadetop_2_1)
+		self:fadebottom(receptor_fadebottom_2_1)
+		self:fadeleft(receptor_fadeleft_2_1)
+		self:faderight(receptor_faderight_2_1)
+		self:croptop(receptor_croptop_2_1)
+		self:cropbottom(receptor_cropbottom_2_1)
+		self:cropleft(receptor_cropleft_2_1)
+		self:cropright(receptor_cropright_2_1)
+		self:sleep(0.05); self:queuecommand('Update')
+	end"><children>
+		<Sprite Texture="_Down Receptor tex" Frame0000="0" Delay0000="0.95" Frame0001="1" Delay0001="1"
+			Frame0002="2" Delay0002="1" Frame0003="3" Delay0003="1" Frame0004="0" Delay0004="0.05"
+			InitCommand="x,0;rotationz,180;EffectClock,beat;DiffuseRamp;
+			EffectColor1,0.4,0.4,0.4,1;EffectColor2,1,1,1,1,1;effectperiod,0.5;EffectDelay,0.5;EffectOffset,0.05"
+		/>
+		<Sprite Texture="_Down Receptor tex" Frame0000="0" Delay0000="0.95" Frame0001="1" Delay0001="1"
+			Frame0002="2" Delay0002="1" Frame0003="3" Delay0003="1" Frame0004="0" Delay0004="0.05"
+			InitCommand="x,0;rotationz,180;blend,add;diffusealpha,0"
+			LiftCommand="diffusealpha,0"
+		/>
+	</children></ActorFrame>
+	<ActorFrame InitCommand="%function(self)
+		receptor_x_2_0 = 0
+		receptor_y_2_0 = 0
+		receptor_z_2_0 = 0
+		receptor_rotationx_2_0 = 0
+		receptor_rotationy_2_0 = 0
+		receptor_rotationz_2_0 = 0
+		receptor_zoomx_2_0 = 1
+		receptor_zoomy_2_0 = 1
+		receptor_zoomz_2_0 = 1
+		receptor_fadetop_2_0 = 0
+		receptor_fadebottom_2_0 = 0
+		receptor_fadeleft_2_0 = 0
+		receptor_faderight_2_0 = 0
+		receptor_croptop_2_0 = 0
+		receptor_cropbottom_2_0 = 0
+		receptor_cropleft_2_0 = 0
+		receptor_cropright_2_0 = 0
+		self:sleep(0); self:queuecommand('Update')
+	end"
+	UpdateCommand="%function(self)
+		self:x(receptor_x_2_0)
+		self:y(receptor_y_2_0)
+		self:z(receptor_z_2_0)
+		self:rotationx(receptor_rotationx_2_0)
+		self:rotationy(receptor_rotationy_2_0)
+		self:rotationz(receptor_rotationz_2_0)
+		self:zoomx(receptor_zoomx_2_0)
+		self:zoomy(receptor_zoomy_2_0)
+		self:zoomz(receptor_zoomz_2_0)
+		self:fadetop(receptor_fadetop_2_0)
+		self:fadebottom(receptor_fadebottom_2_0)
+		self:fadeleft(receptor_fadeleft_2_0)
+		self:faderight(receptor_faderight_2_0)
+		self:croptop(receptor_croptop_2_0)
+		self:cropbottom(receptor_cropbottom_2_0)
+		self:cropleft(receptor_cropleft_2_0)
+		self:cropright(receptor_cropright_2_0)
+		self:sleep(0.05); self:queuecommand('Update')
+	end"><children>
+		<Sprite Texture="_Down Receptor tex" Frame0000="0" Delay0000="0.95" Frame0001="1" Delay0001="1"
+			Frame0002="2" Delay0002="1" Frame0003="3" Delay0003="1" Frame0004="0" Delay0004="0.05"
+			InitCommand="x,0;rotationz,180;EffectClock,beat;DiffuseRamp;
+			EffectColor1,0.4,0.4,0.4,1;EffectColor2,1,1,1,1,1;effectperiod,0.5;EffectDelay,0.5;EffectOffset,0.05"
+		/>
+		<Sprite Texture="_Down Receptor tex" Frame0000="0" Delay0000="0.95" Frame0001="1" Delay0001="1"
+			Frame0002="2" Delay0002="1" Frame0003="3" Delay0003="1" Frame0004="0" Delay0004="0.05"
+			InitCommand="x,0;rotationz,180;blend,add;diffusealpha,0"
+			LiftCommand="diffusealpha,0"
+		/>
+	</children></ActorFrame>
+	
+</children></ActorFrame>
+</children></ActorFrame>

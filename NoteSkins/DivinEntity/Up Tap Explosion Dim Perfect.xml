@@ -1,0 +1,75 @@
+<Actor
+	File="_exp_perfect"
+	RefreshCommand="%function (self)
+		if( receptor_rotationx_2 )then
+			self:rotationx(receptor_rotationx_2);
+		end
+		if( receptor_rotationy_2 )then
+			self:rotationy(receptor_rotationy_2);
+		end
+		if( receptor_rotationz_2 )then
+			self:rotationz(receptor_rotationz_2+180);
+		end
+		
+		if( receptor_x_2 )then
+			self:x(receptor_x_2);
+		end
+		if( receptor_y_2 )then
+			self:y(receptor_y_2);
+		end
+		if( receptor_z_2 )then
+			self:z(receptor_z_2);
+		end
+		
+		if( receptor_zoom_2 )then
+			self:zoom(receptor_zoom_2);
+		end
+		if( receptor_zoomx_2 )then
+			self:zoomx(receptor_zoomx_2);
+		end
+		if( receptor_zoomy_2 )then
+			self:zoomy(receptor_zoomy_2);
+		end
+		if( receptor_zoomtowidth_2 )then
+			self:zoomtowidth(receptor_zoomtowidth_2);
+		end
+		if( receptor_zoomtoheight_2 )then
+			self:zoomtoheight(receptor_zoomtoheight_2);
+		end
+		
+		if( receptor_tint_2 )then
+			self:diffuse(receptor_tint_2[1],receptor_tint_2[2],receptor_tint_2[3],receptor_tint_2[4]);
+		end
+		if( receptor_fade_2 )then
+			self:diffusealpha(receptor_fade_2);
+		end
+		
+		if( receptor_effect_2 )then
+			if receptor_effect_2 == 'wag' then
+				self:wag();
+			end
+			if receptor_effect_2 == 'vibrate' then
+				self:vibrate();
+			end
+			if receptor_effect_2 == 'spin' then
+				self:spin();
+			end
+			if receptor_effect_2 == 'pulse' then
+				self:pulse();
+			end
+			if receptor_effect_2 == 'bob' then
+				self:bob();
+			end
+			if receptor_effect_2 == 'bounce' then
+				self:bounce();
+			end
+			if receptor_effectcontrol_2 then
+				self:effectmagnitude(receptor_effectcontrol_2[1],receptor_effectcontrol_2[2],receptor_effectcontrol_2[3]);
+				self:effectperiod(receptor_effectcontrol_2[4]);
+				self:effectclock(receptor_effectcontrol_2[5]);
+			end
+		else
+			self:stopeffect();
+		end
+	end"
+/>

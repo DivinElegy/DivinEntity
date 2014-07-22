@@ -1,0 +1,37 @@
+<ActorFrame><children>
+<Actor
+	File='64th.sprite'
+	InitCommand='%function (self)
+		noteskin_64_1_4 = self;
+		self:rotationz(0);
+	end'
+/>
+<Actor
+	File='64th.sprite'
+	InitCommand='%function (self)
+		noteskin_64_1_3 = self;
+		self:rotationz(0);
+	end'
+/>
+<Actor
+	File='64th.sprite'
+	InitCommand='%function (self)
+		noteskin_64_1_2 = self;
+		self:rotationz(0);
+	end'
+/>
+<Actor
+	File='64th.sprite'
+	InitCommand='%function (self)
+		noteskin_64_1_1 = self;
+		self:rotationz(0);
+	end'
+/>
+<Actor
+	File='64th.sprite'
+	InitCommand='%function (self)
+		noteskin_64_1_0 = self;
+		self:rotationz(0);
+	end'
+/>
+</children></ActorFrame>
