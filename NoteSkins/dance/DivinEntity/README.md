@@ -1,0 +1,2 @@
+#WUT
+Hopefully this file will contain implementation details for the God notskin so that anyone wishing to extend functionality in the future has a clear picture of how it works and what the best way to do stuff is.
