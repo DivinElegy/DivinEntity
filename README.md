@@ -1,8 +1,11 @@
-This is going to be a really excellent readme for a really excellent noteskin.
+#What is this?
+This is a WIP version of what will hopefully be a more standardised version of the so called God noteskin.
 
-Right now this repository contains a copy of the SATAN-metal noteskin given to me by Jayce.
+**THIS WIP BRANCH IN _NO WAY_ REFLECTS THE FINAL BUILD OF THE NOTESKIN. IT IS HIGHLY SUBJECT TO CHANGE.**
 
-Hopefully this will act as a central portal for where to obtain this noteskin, and a useful log of changes and contributions going forward.
+If you make anything using this noteskin, be aware the your simfile will very likely be incompatible with future versions. The latest, and most compatible version of the noteskin will always be in the master branch.
+
+---
 
 #Acknowledgments
 This noteskin would not exist were it not for the hard work by the following people:
