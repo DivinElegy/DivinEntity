@@ -5,7 +5,8 @@ This is a WIP version of what will hopefully be a more standardised version of t
 
 If you make anything using this noteskin, be aware the your simfile will very likely be incompatible with future versions. The latest, and most compatible version of the noteskin will always be in the master branch.
 
----
+#Contributing
+If you feel you have something of value to add to this project, _please_ make a fork under your own GitHub account, then send a pull request. This is the best way to keep track of changes and give credit where credit is due. Thanks.
 
 #Acknowledgments
 This noteskin would not exist were it not for the hard work by the following people:
