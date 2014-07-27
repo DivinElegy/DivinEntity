@@ -26,9 +26,11 @@
 							    --This is the worst hack ever and I am not proud of it.
 								_G['DivinEntity_f2r'] = v
 								funcstr = '_G[\'DivinEntity_f2r\']:' .. key .. '(\'' .. unpack(paramsToPassOn) .. '\')';
-								assert(loadstring(funcstr))()
+								assert(loadstring(funcstr))()								
 							end
-						end
+							
+							return table
+						end					
 					end
 					
 					local arrows = {}
