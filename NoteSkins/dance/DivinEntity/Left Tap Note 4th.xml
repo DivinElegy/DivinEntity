@@ -1,59 +1,90 @@
-<ActorFrame InitCommand="%function(self)				
-				DIVINE_ENTITY = {tapArrows={}, ghostArrows={}}
+<ActorFrame InitCommand=
+	"DIVINE_ENTITY = {
+			tapArrows={},
+			ghostArrows={},
+			receptors={PLAYER_1={}, PLAYER_2={}}, --I think this will only be used to distinguish between p1 and p2 ...
+			receptorsLookupTable={},
+		}
 
-				function DIVINE_ENTITY:registerTapArrow (name, actor)
-					self.tapArrows[name] = actor
-				end
+	function DIVINE_ENTITY:registerTapArrow (name, actor)
+		self.tapArrows[name] = actor
+	end
 
-				function DIVINE_ENTITY:getTapArrows(direction, quant)
-					direction = direction or ''
-					quant = quant or ''
-					
-					local function catch(table, key)
-					    return function(...)
-							local paramsToPassOn = {}
-						
-							tick = 1;
-							for i,v in pairs(arg) do
-							    if type(v) ~= 'table' then
-									paramsToPassOn[tick] = v
-									tick = tick+1
-								end
-							end
-						 
-							for i,v in pairs(arg[1]) do
-								--SCREENMAN:SystemMessage(tostring(i))
-							    --This is the worst hack ever and I am not proud of it.
-								_G['DivinEntity_f2r'] = v
-								funcstr = '_G[\'DivinEntity_f2r\']:' .. key .. '(\'' .. unpack(paramsToPassOn) .. '\')';
-								assert(loadstring(funcstr))()								
-							end
-							
-							return table
-						end					
+	--[[
+	p1's stuff is loaded first. So registerReceptor will always
+	be called from p1 first. Therefore it should be sufficient
+	to check if we have a actor for p1. If we don't then this
+	actor must be p1s, otherwise it is p2s.
+
+	We also put the string value of the actor in a lookup table.
+	This way, in the receptor xml files, all we have to do on a pressCommand
+	is DIVINE_ENTITY:receptorPressed(self) and we can lookup what arrow that
+	actor is, and broadcase accordingly.
+	--]]
+	function DIVINE_ENTITY:registerReceptor(direction, actor)
+		if self.receptors[PLAYER_1][direction] == nil then
+			self.receptors[PLAYER_1][direction] = actor
+			self.receptorsLookupTable[tostring(actor)] = 'p1' .. direction
+		else
+			self.receptors[PLAYER_2][direction] = actor
+			self.receptorsLookupTable[tostring(actor)] = 'p2' .. direction		
+		end
+	end
+
+	function DIVINE_ENTITY:receptorPressed(actor)
+		local prefix = self.receptorsLookupTable[tostring(actor)]
+		MESSAGEMAN:Broadcast('Step' .. prefix)
+	end
+
+	function DIVINE_ENTITY:getTapArrows(direction, quant)
+		direction = direction or ''
+		quant = quant or ''
+		
+		local function catch(table, key)
+			return function(...)
+				local paramsToPassOn = {}
+			
+				tick = 1;
+				for i,v in pairs(arg) do
+					if type(v) ~= 'table' then
+						paramsToPassOn[tick] = v
+						tick = tick+1
 					end
-					
-					local arrows = {}
-					local mt = { __index = catch }
-
-					setmetatable(arrows, mt)
-
-					--No string.match in Lua 5.0 :[
-					for name,actor in pairs(self.tapArrows) do
-						if direction and quant then
-							if string.find(name, direction .. ' Tap Note ' .. quant) then arrows[name] = actor end
-						elseif direction then
-							if string.find(name, direction) then arrows[name] = actor end
-						elseif quant then
-							if string.find(name, quant) then arrows[name] = actor end 
-						else
-							arrows[name] = actor
-						end
-					end	
-
-					return arrows
 				end
-			end">
+			 
+				for i,v in pairs(arg[1]) do
+					--SCREENMAN:SystemMessage(tostring(i))
+					--This is the worst hack ever and I am not proud of it.
+					_G['DivinEntity_f2r'] = v
+					funcstr = '_G[\'DivinEntity_f2r\']:' .. key .. '(\'' .. unpack(paramsToPassOn) .. '\')';
+					assert(loadstring(funcstr))()								
+				end
+				
+				return table
+			end					
+		end
+		
+		local arrows = {}
+		local mt = { __index = catch }
+
+		setmetatable(arrows, mt)
+
+		--No string.match in Lua 5.0 :[
+		for name,actor in pairs(self.tapArrows) do
+			if direction and quant then
+				if string.find(name, direction .. ' Tap Note ' .. quant) then arrows[name] = actor end
+			elseif direction then
+				if string.find(name, direction) then arrows[name] = actor end
+			elseif quant then
+				if string.find(name, quant) then arrows[name] = actor end 
+			else
+				arrows[name] = actor
+			end
+		end	
+
+		return arrows
+	end"
+>
 <children>
 
 <Actor
