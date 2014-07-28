@@ -1,18 +1,14 @@
-<ActorFrame InitCommand="
+<ActorFrame InitCommand="%function(self)				
 	DIVINE_ENTITY = {
-			tapArrows={},
-			ghostArrows={},
-			receptors={[PLAYER_1]={}, [PLAYER_2]={}},
-			receptorsLookupTable={},
-			
-			--some constants
-			local STATE_NEUTRAL = 0,
-			local STATE_PRESSED = 1
-		}
-
-	function DIVINE_ENTITY:registerTapArrow (name, actor)
-		self.tapArrows[name] = actor
-	end
+		tapArrows={},
+		ghostArrows={},
+		receptors={[PLAYER_1]={}, [PLAYER_2]={}},
+		receptorsLookupTable={},
+		
+		--some constants
+		STATE_NEUTRAL = 1,
+		STATE_PRESSED = 2
+	}
 
 	--[[
 	p1's stuff is loaded first. So registerReceptor will always
@@ -26,30 +22,52 @@
 	actor is, and broadcast accordingly.
 	--]]
 	function DIVINE_ENTITY:registerReceptor(direction, actor)
+	
+		--Case 1: P1 _XOR_ P2. We know exactly who the receptors belong to.
+		if GAMESTATE:IsPlayerEnabled(PLAYER_1) and not GAMESTATE:IsPlayerEnabled(PLAYER_2) then
+			self.receptors[PLAYER_1][direction] = actor
+			self.receptorsLookupTable[tostring(actor)] = {name = 'P1' .. direction, state = self.STATE_NEUTRAL}			
+			return
+		elseif not GAMESTATE:IsPlayerEnabled(PLAYER_1) and GAMESTATE:IsPlayerEnabled(PLAYER_2) then
+			self.receptors[PLAYER_2][direction] = actor
+			self.receptorsLookupTable[tostring(actor)] = {name = 'P2' .. direction, state = self.STATE_NEUTRAL}
+			return
+		end
+	
+		--Case 2: P1 _AND_ P2. We don't know who the arrows belong to, need to be clever.
 		if self.receptors[PLAYER_1][direction] == nil then
 			self.receptors[PLAYER_1][direction] = actor
-			self.receptorsLookupTable[tostring(actor)] = {name = 'p1' .. direction, state = 0}
+			self.receptorsLookupTable[tostring(actor)] = {name = 'P1' .. direction, state = self.STATE_NEUTRAL}
 		else
 			self.receptors[PLAYER_2][direction] = actor
-			self.receptorsLookupTable[tostring(actor)] = {name = 'p2' .. direction, state = 0}
+			self.receptorsLookupTable[tostring(actor)] = {name = 'P2' .. direction, state = self.STATE_NEUTRAL}
 		end
 	end
-
+	
 	function DIVINE_ENTITY:receptorPressed(actor)
 		local prefix = self.receptorsLookupTable[tostring(actor)].name
-		self.receptorsLookupTable[tostring(actor)].state = STATE_PRESSED
+		self.receptorsLookupTable[tostring(actor)].state = self.STATE_PRESSED
 		MESSAGEMAN:Broadcast('Step' .. prefix .. 'Pressed')
 	end
 
 	function DIVINE_ENTITY:receptorLifted(actor)
 		local prefix = self.receptorsLookupTable[tostring(actor)].name
-		self.receptorsLookupTable[tostring(actor)].state = STATE_NEUTRAL
+		self.receptorsLookupTable[tostring(actor)].state = self.STATE_NEUTRAL
 		MESSAGEMAN:Broadcast('Step' .. prefix .. 'Lifted')
 	end
 
 	function DIVINE_ENTITY:isReceptorPressed(direction, player)
 		local actor = self.receptors[player][direction]
-		return self.receptorsLookupTable[tostring(actor)].state == STATE_PRESSED
+		return self.receptorsLookupTable[tostring(actor)].state == self.STATE_PRESSED
+	end
+	
+	function DIVINE_ENTITY:getReceptorState(direction, player)
+		local actor = self.receptors[player][direction]		
+		return self.receptorsLookupTable[tostring(actor)].state
+	end
+	
+	function DIVINE_ENTITY:registerTapArrow (name, actor)
+		self.tapArrows[name] = actor
 	end
 
 	function DIVINE_ENTITY:getTapArrows(direction, quant)
@@ -100,10 +118,8 @@
 
 		return arrows
 	end
-"
->
+end">
 <children>
-
 <Actor
 	File='sprites/4th.sprite'
 	InitCommand='%function (self)
