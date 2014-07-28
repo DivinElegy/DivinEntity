@@ -1,9 +1,13 @@
-<ActorFrame InitCommand=
-	"DIVINE_ENTITY = {
+<ActorFrame InitCommand="
+	DIVINE_ENTITY = {
 			tapArrows={},
 			ghostArrows={},
-			receptors={PLAYER_1={}, PLAYER_2={}}, --I think this will only be used to distinguish between p1 and p2 ...
+			receptors={[PLAYER_1]={}, [PLAYER_2]={}},
 			receptorsLookupTable={},
+			
+			--some constants
+			local STATE_NEUTRAL = 0,
+			local STATE_PRESSED = 1
 		}
 
 	function DIVINE_ENTITY:registerTapArrow (name, actor)
@@ -19,21 +23,33 @@
 	We also put the string value of the actor in a lookup table.
 	This way, in the receptor xml files, all we have to do on a pressCommand
 	is DIVINE_ENTITY:receptorPressed(self) and we can lookup what arrow that
-	actor is, and broadcase accordingly.
+	actor is, and broadcast accordingly.
 	--]]
 	function DIVINE_ENTITY:registerReceptor(direction, actor)
 		if self.receptors[PLAYER_1][direction] == nil then
 			self.receptors[PLAYER_1][direction] = actor
-			self.receptorsLookupTable[tostring(actor)] = 'p1' .. direction
+			self.receptorsLookupTable[tostring(actor)] = {name = 'p1' .. direction, state = 0}
 		else
 			self.receptors[PLAYER_2][direction] = actor
-			self.receptorsLookupTable[tostring(actor)] = 'p2' .. direction		
+			self.receptorsLookupTable[tostring(actor)] = {name = 'p2' .. direction, state = 0}
 		end
 	end
 
 	function DIVINE_ENTITY:receptorPressed(actor)
-		local prefix = self.receptorsLookupTable[tostring(actor)]
-		MESSAGEMAN:Broadcast('Step' .. prefix)
+		local prefix = self.receptorsLookupTable[tostring(actor)].name
+		self.receptorsLookupTable[tostring(actor)].state = STATE_PRESSED
+		MESSAGEMAN:Broadcast('Step' .. prefix .. 'Pressed')
+	end
+
+	function DIVINE_ENTITY:receptorLifted(actor)
+		local prefix = self.receptorsLookupTable[tostring(actor)].name
+		self.receptorsLookupTable[tostring(actor)].state = STATE_NEUTRAL
+		MESSAGEMAN:Broadcast('Step' .. prefix .. 'Lifted')
+	end
+
+	function DIVINE_ENTITY:isReceptorPressed(direction, player)
+		local actor = self.receptors[player][direction]
+		return self.receptorsLookupTable[tostring(actor)].state == STATE_PRESSED
 	end
 
 	function DIVINE_ENTITY:getTapArrows(direction, quant)
@@ -83,7 +99,8 @@
 		end	
 
 		return arrows
-	end"
+	end
+"
 >
 <children>
 

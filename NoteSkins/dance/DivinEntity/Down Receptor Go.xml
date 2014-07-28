@@ -2,6 +2,7 @@
 <ActorFrame 
 	InitCommand="%function(self) DIVINE_ENTITY:registerReceptor('Down', self) end"
 	PressCommand="%function(self) DIVINE_ENTITY:receptorPressed(self) end"
+	LiftCommand="%function(self) DIVINE_ENTITY:receptorLifted(self) end"
 >
 <children>
 	<Sprite
