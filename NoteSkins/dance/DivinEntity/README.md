@@ -81,7 +81,7 @@ Create a player controlled actor:
 ```XML
 <Layer
     File='mySprite.sprite'
-    InitCommand="x,SCREEN_CENTER_X;y,SCREEN_CENTER_Y-10;zoom,0.5"
+    InitCommand="x,SCREEN_CENTER_X;y,SCREEN_CENTER_Y"
     OnCommand="%function(self)
         self:queuecommand('Update')
     end"
