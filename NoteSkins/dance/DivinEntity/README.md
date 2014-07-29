@@ -8,7 +8,7 @@ DIVINE_ENTITY is essential a registry of actors accessed through simple methods.
 
 The implementation of the Divine Entity is reasonably simple. To the best of my knowledge, the first XML file loaded from the DivinEntity NoteSkin is "Left Tap Note 4th.xml". This is the file where the majority of implementation takes place. DIVINE_ENTITY is a global Lua object with some methods to make life easy.
 
-The way that DIVINE_ENTITY knows about NoteSkin actors is through the "register" methods. In the vase majority of XML files there is something like this sample from [Down Tap Note 16th.xml](https://github.com/DivinElegy/DivinEntity-Noteskin/blob/de-wip/NoteSkins/dance/DivinEntity/Down%20Tap%20Note%2016th.xml):
+The way that DIVINE_ENTITY knows about NoteSkin actors is through the "register" methods. In the vast majority of XML files there is something like this sample from [Down Tap Note 16th.xml](https://github.com/DivinElegy/DivinEntity-Noteskin/blob/de-wip/NoteSkins/dance/DivinEntity/Down%20Tap%20Note%2016th.xml):
 
 ```XML
 <Actor
