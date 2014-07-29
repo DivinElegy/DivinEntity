@@ -8,7 +8,7 @@ If you make anything using this noteskin, be aware the your simfile will very li
 #Why?
 The existing "God" and "Satan" NoteSkins floating around the Internet are ugly behomoths of cobbled together code with no real structure. They are hard for a novice to know how to use (and even for a relative expert). The DivinEntity NoteSkin aims to empower step artists with creative tools to make the best simfiles possible, without having to deal with too much bullshit.
 
-From a code point of view, the main goal of the DivinEntity NoteSkin aims to remove as much Lua as possible from XML files and keep everything neat, organised and maintainable.
+From a code point of view, the main goal of the DivinEntity NoteSkin is to remove as much Lua as possible from XML files and keep everything neat, organised and maintainable.
 
 #Contributing
 If you feel you have something of value to add to this project, _please_ make a fork under your own GitHub account, then send a pull request. This is the best way to keep track of changes and give credit where credit is due. Thanks.
