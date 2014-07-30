@@ -2,6 +2,7 @@
  InitCommand="%function(self)                
     DIVINE_ENTITY = {
         notes={},
+        explosions={},
         receptors={[PLAYER_1]={}, [PLAYER_2]={}},
         receptorsLookupTable={},
         
@@ -12,8 +13,33 @@
         NOTE_TYPE_HOLD_HEAD_ACTIVE = 'Hold Head active',
         NOTE_TYPE_HOLD_HEAD_INACTIVE = 'Hold Head inactive',
         NOTE_TYPE_ROLL_HEAD_ACTIVE = 'Roll Head active',
-        NOTE_TYPE_ROLL_HEAD_INACTIVE = 'Roll Head inactive'
+        NOTE_TYPE_ROLL_HEAD_INACTIVE = 'Roll Head inactive',
+        EXPLOSION_NOTE_TYPE_TAP = 'Tap',
     }
+    
+    --This function makes the fluent magic happen in getTapNotes and getExplosions.
+    function DIVINE_ENTITY.catch(table, key)
+        return function(...)
+            local paramsToPassOn = {}
+        
+            tick = 1;
+            for i,v in pairs(arg) do
+                if type(v) ~= 'table' then
+                    paramsToPassOn[tick] = v
+                    tick = tick+1
+                end
+            end
+         
+            for i,v in pairs(arg[1]) do
+                --This is the worst hack ever and I am not proud of it.
+                _G['DivinEntity_f2r'] = v
+                funcstr = '_G[\'DivinEntity_f2r\']:' .. key .. '(\'' .. unpack(paramsToPassOn) .. '\')';
+                assert(loadstring(funcstr))()                                
+            end
+            
+            return table
+        end                    
+    end
 
     --[[
     p1's stuff is loaded first. So registerReceptor will always
@@ -80,53 +106,24 @@
     end
 	
     function DIVINE_ENTITY:getNotes(noteType, direction, quant)
-        direction = direction or ''
-        quant = quant or ''
-
-        local function catch(table, key)
-            return function(...)
-                local paramsToPassOn = {}
-            
-                tick = 1;
-                for i,v in pairs(arg) do
-                    if type(v) ~= 'table' then
-                        paramsToPassOn[tick] = v
-                        tick = tick+1
-                    end
-                end
-             
-                for i,v in pairs(arg[1]) do
-                    --This is the worst hack ever and I am not proud of it.
-                    _G['DivinEntity_f2r'] = v
-                    funcstr = '_G[\'DivinEntity_f2r\']:' .. key .. '(\'' .. unpack(paramsToPassOn) .. '\')';
-                    assert(loadstring(funcstr))()                                
-                end
-                
-                return table
-            end                    
-        end
+        local direction = direction or ''
+        local quant = quant or ''
         
         local arrows = {}
-        local mt = { __index = catch }
+        local mt = { __index = self.catch }
 
         setmetatable(arrows, mt)
 
         --No string.match in Lua 5.0 :[
         for name,actor in pairs(self.notes[noteType]) do
-            if direction and quant then                               
+            if direction and quant then
                 if string.find(name, direction .. ' ' .. noteType .. ' ' .. quant) then arrows[name] = actor end
-            elseif direction then
-                if string.find(name, direction) then arrows[name] = actor end
-            elseif quant then
-                if string.find(name, quant) then arrows[name] = actor end 
-            else
-                arrows[name] = actor
             end
         end    
 
         return arrows
     end
-   
+       
     function DIVINE_ENTITY:registerTapNote(name, actor)
         DIVINE_ENTITY:registerNote(self.NOTE_TYPE_TAP, name, actor)
     end
@@ -165,7 +162,64 @@
     
     function DIVINE_ENTITY:getInactiveRollHeads(direction, quant)
         return DIVINE_ENTITY:getNotes(self.NOTE_TYPE_ROLL_HEAD_INACTIVE, direction, quant)
-    end 
+    end
+    
+    function DIVINE_ENTITY:registerExplosion(noteType, name, actor)
+        if self.explosions[noteType] == nil then
+            self.explosions[noteType] = {}
+        end
+
+        self.explosions[noteType][name] = actor
+    end
+    
+    --[[
+    This is very similar to getTapNotes but with explosions we have an extra thing to match.
+    If I was smart I might refactor these functions in to one (but even then, that might be too
+    messy. For now I don't have time so this has to do
+    --]]
+    function DIVINE_ENTITY:getExplosions(noteType, direction, explosionType, TNS)
+        --local direction = direction or ''
+        --local explosionType = explosionType or ''
+        --local TNS = TNS or ''
+        
+        local explosions = {}
+        local mt = { __index = self.catch }
+
+        setmetatable(explosions, mt)
+
+        --No string.match in Lua 5.0 :[
+        --I can think of a really nice way to generalise this idea but I really don't have time to play around implementing it :[
+        for name,actor in pairs(self.explosions[noteType]) do
+            if direction and explosionType and TNS then                               
+                if string.find(name, direction .. ' ' .. noteType .. ' Explosion ' .. explosionType .. ' ' .. TNS) then explosions[name] = actor end
+            elseif direction and explosionType then
+                if string.find(name, direction) and string.find(name, explosionType) then explosions[name] = actor end
+            elseif direction and TNS then
+                if string.find(name, direction) and string.find(name, TNS) then explosions[name] = actor end
+            elseif explosionType and TNS then
+                if string.find(name, TNS) and string.find(name, explosionType) then explosions[name] = actor end
+            elseif direction then
+                if string.find(name, direction) then explosions[name] = actor end 
+            elseif explosionType then
+                if string.find(name, explosionType) then explosions[name] = actor end 
+            elseif TNS then
+                if string.find(name, TNS) then explosions[name] = actor end 
+            else
+                explosions[name] = actor
+            end
+        end    
+
+        --I fixed the explosions :]
+        return explosions
+    end
+    
+    function DIVINE_ENTITY:registerTapExplosion(name, actor)
+        DIVINE_ENTITY:registerExplosion(self.EXPLOSION_NOTE_TYPE_TAP, name, actor)
+    end
+    
+    function DIVINE_ENTITY:getTapExplosions(direction, explosionType, TNS)
+        return DIVINE_ENTITY:getExplosions(self.EXPLOSION_NOTE_TYPE_TAP, direction, explosionType, TNS)
+    end    
 end">
  <children>
   <Actor File='sprites/4th.sprite'
