@@ -2,7 +2,7 @@
 <Actor
     File='sprites/12th.sprite'
     InitCommand='%function (self)
-        DIVINE_ENTITY:registerTapArrow("Up Tap Note 48th", self)
+        DIVINE_ENTITY:registerTapNote("Up Tap Note 48th", self)
         self:rotationz(180);
     end'
 />

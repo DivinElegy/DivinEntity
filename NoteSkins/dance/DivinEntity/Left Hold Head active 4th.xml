@@ -1,9 +1,10 @@
 <ActorFrame><children>
 <Actor
-    File='sprites/12th.sprite'
+    File='sprites/4th.sprite'
     InitCommand='%function (self)
-        DIVINE_ENTITY:registerTapNote("Left Tap Note 12th", self)
+        DIVINE_ENTITY:registerActiveHoldHead("Left Hold Head active 4th", self)
         self:rotationz(90);
+        self:zoom(2)
     end'
 />
 </children></ActorFrame>

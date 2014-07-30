@@ -1,13 +1,15 @@
-<ActorFrame InitCommand="%function(self)                
+<ActorFrame
+ InitCommand="%function(self)                
     DIVINE_ENTITY = {
-        tapArrows={},
-        ghostArrows={},
+        notes={},
         receptors={[PLAYER_1]={}, [PLAYER_2]={}},
         receptorsLookupTable={},
         
         --some constants
         STATE_NEUTRAL = 1,
-        STATE_PRESSED = 2
+        STATE_PRESSED = 2,
+        NOTE_TYPE_TAP = 'Tap Note',
+        NOTE_TYPE_HOLD_HEAD_ACTIVE = 'Hold Head active'
     }
 
     --[[
@@ -66,14 +68,18 @@
         return self.receptorsLookupTable[tostring(actor)].state
     end
     
-    function DIVINE_ENTITY:registerTapArrow (name, actor)
-        self.tapArrows[name] = actor
-    end
+    function DIVINE_ENTITY:registerNote (noteType, name, actor)
+        if self.notes[noteType] == nil then
+            self.notes[noteType] = {}
+        end
 
-    function DIVINE_ENTITY:getTapArrows(direction, quant)
+        self.notes[noteType][name] = actor
+    end
+	
+    function DIVINE_ENTITY:getNotes(noteType, direction, quant)
         direction = direction or ''
         quant = quant or ''
-        
+
         local function catch(table, key)
             return function(...)
                 local paramsToPassOn = {}
@@ -87,7 +93,6 @@
                 end
              
                 for i,v in pairs(arg[1]) do
-                    --SCREENMAN:SystemMessage(tostring(i))
                     --This is the worst hack ever and I am not proud of it.
                     _G['DivinEntity_f2r'] = v
                     funcstr = '_G[\'DivinEntity_f2r\']:' .. key .. '(\'' .. unpack(paramsToPassOn) .. '\')';
@@ -104,9 +109,10 @@
         setmetatable(arrows, mt)
 
         --No string.match in Lua 5.0 :[
-        for name,actor in pairs(self.tapArrows) do
-            if direction and quant then
-                if string.find(name, direction .. ' Tap Note ' .. quant) then arrows[name] = actor end
+        for name,actor in pairs(self.notes[noteType]) do
+            SCREENMAN:SystemMessage(name)
+            if direction and quant then                               
+                if string.find(name, direction .. ' ' .. noteType .. ' ' .. quant) then arrows[name] = actor end
             elseif direction then
                 if string.find(name, direction) then arrows[name] = actor end
             elseif quant then
@@ -118,13 +124,28 @@
 
         return arrows
     end
+   
+    function DIVINE_ENTITY:registerTapNote(name, actor)
+        DIVINE_ENTITY:registerNote(self.NOTE_TYPE_TAP, name, actor)
+    end
+      
+    function DIVINE_ENTITY:getTapNotes(direction, quant)
+        return DIVINE_ENTITY:getNotes(self.NOTE_TYPE_TAP, direction, quant) 
+    end 
+    
+    function DIVINE_ENTITY:registerActiveHoldHead(name, actor)    
+        DIVINE_ENTITY:registerNote(self.NOTE_TYPE_HOLD_HEAD_ACTIVE, name, actor)
+    end
+    
+    function DIVINE_ENTITY:getActiveHoldHeads(direction, quant)
+        return DIVINE_ENTITY:getNotes(self.NOTE_TYPE_HOLD_HEAD_ACTIVE, direction, quant)
+    end   
 end">
-<children>
-<Actor
-    File='sprites/4th.sprite'
-    InitCommand='%function (self)
-        DIVINE_ENTITY:registerTapArrow("Left Tap Note 4th", self)
+ <children>
+  <Actor File='sprites/4th.sprite'
+   InitCommand='%function (self)
+        DIVINE_ENTITY:registerTapNote("Left Tap Note 4th", self)
         self:rotationz(90);
-    end'
-/>
-</children></ActorFrame>
+    end' />
+ </children>
+</ActorFrame>
