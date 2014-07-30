@@ -1,0 +1,9 @@
+<ActorFrame><children>
+<Actor
+    File='sprites/8th.sprite'
+    InitCommand='%function (self)
+        DIVINE_ENTITY:registerInactiveRollHead("Down Roll Head inactive 8th", self)
+        self:rotationz(0);
+    end'
+/>
+</children></ActorFrame>

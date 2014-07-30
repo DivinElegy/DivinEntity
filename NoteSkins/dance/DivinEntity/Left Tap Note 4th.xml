@@ -9,7 +9,10 @@
         STATE_NEUTRAL = 1,
         STATE_PRESSED = 2,
         NOTE_TYPE_TAP = 'Tap Note',
-        NOTE_TYPE_HOLD_HEAD_ACTIVE = 'Hold Head active'
+        NOTE_TYPE_HOLD_HEAD_ACTIVE = 'Hold Head active',
+        NOTE_TYPE_HOLD_HEAD_INACTIVE = 'Hold Head inactive',
+        NOTE_TYPE_ROLL_HEAD_ACTIVE = 'Roll Head active',
+        NOTE_TYPE_ROLL_HEAD_INACTIVE = 'Roll Head inactive'
     }
 
     --[[
@@ -110,7 +113,6 @@
 
         --No string.match in Lua 5.0 :[
         for name,actor in pairs(self.notes[noteType]) do
-            SCREENMAN:SystemMessage(name)
             if direction and quant then                               
                 if string.find(name, direction .. ' ' .. noteType .. ' ' .. quant) then arrows[name] = actor end
             elseif direction then
@@ -139,7 +141,31 @@
     
     function DIVINE_ENTITY:getActiveHoldHeads(direction, quant)
         return DIVINE_ENTITY:getNotes(self.NOTE_TYPE_HOLD_HEAD_ACTIVE, direction, quant)
-    end   
+    end
+    
+    function DIVINE_ENTITY:registerInactiveHoldHead(name, actor)    
+        DIVINE_ENTITY:registerNote(self.NOTE_TYPE_HOLD_HEAD_INACTIVE, name, actor)
+    end
+    
+    function DIVINE_ENTITY:getInactiveHoldHeads(direction, quant)
+        return DIVINE_ENTITY:getNotes(self.NOTE_TYPE_HOLD_HEAD_INACTIVE, direction, quant)
+    end 
+    
+    function DIVINE_ENTITY:registerActiveRollHead(name, actor)    
+        DIVINE_ENTITY:registerNote(self.NOTE_TYPE_ROLL_HEAD_ACTIVE, name, actor)
+    end
+    
+    function DIVINE_ENTITY:getActiveRollHeads(direction, quant)
+        return DIVINE_ENTITY:getNotes(self.NOTE_TYPE_ROLL_HEAD_ACTIVE, direction, quant)
+    end
+    
+    function DIVINE_ENTITY:registerInactiveRollHead(name, actor)    
+        DIVINE_ENTITY:registerNote(self.NOTE_TYPE_ROLL_HEAD_INACTIVE, name, actor)
+    end
+    
+    function DIVINE_ENTITY:getInactiveRollHeads(direction, quant)
+        return DIVINE_ENTITY:getNotes(self.NOTE_TYPE_ROLL_HEAD_INACTIVE, direction, quant)
+    end 
 end">
  <children>
   <Actor File='sprites/4th.sprite'

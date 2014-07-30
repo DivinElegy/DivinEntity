@@ -2,6 +2,7 @@
 <Actor
     File='sprites/64th.sprite'
     InitCommand='%function (self)
+        DIVINE_ENTITY:registerActiveHoldHead("Down Hold Head active 64th", self)
         self:rotationz(0);
     end'
 />

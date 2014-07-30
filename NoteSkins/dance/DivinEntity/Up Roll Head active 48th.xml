@@ -1,0 +1,9 @@
+<ActorFrame><children>
+<Actor
+    File='sprites/12th.sprite'
+    InitCommand='%function (self)
+        DIVINE_ENTITY:registerActiveRollHead("Up Roll Head active 48th", self)
+        self:rotationz(180);
+    end'
+/>
+</children></ActorFrame>

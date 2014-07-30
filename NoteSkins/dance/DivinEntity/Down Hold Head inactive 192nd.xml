@@ -1,0 +1,9 @@
+<ActorFrame><children>
+<Actor
+    File='sprites/64th.sprite'
+    InitCommand='%function (self)
+        DIVINE_ENTITY:registerInactiveHoldHead("Down Hold Head inactive 192nd", self)
+        self:rotationz(0);
+    end'
+/>
+</children></ActorFrame>
