@@ -1,9 +1,9 @@
 <ActorFrame><children>
 <Actor
-	File='sprites/64th.sprite'
-	InitCommand='%function (self)
-		DIVINE_ENTITY:registerTapArrow("Right Tap Note 64th", self)
-		self:rotationz(-90);
-	end'
+    File='sprites/64th.sprite'
+    InitCommand='%function (self)
+        DIVINE_ENTITY:registerTapArrow("Right Tap Note 64th", self)
+        self:rotationz(-90);
+    end'
 />
 </children></ActorFrame>

@@ -1,8 +1,8 @@
 <ActorFrame><children>
 <Actor
-	File='sprites/32nd.sprite'
-	InitCommand='%function (self)
-		self:rotationz(0);
-	end'
+    File='sprites/32nd.sprite'
+    InitCommand='%function (self)
+        self:rotationz(0);
+    end'
 />
 </children></ActorFrame>
