@@ -3,10 +3,17 @@
     InitCommand="%function(self) DIVINE_ENTITY:registerReceptor('Left', self) end"
     PressCommand="%function(self) DIVINE_ENTITY:receptorPressed(self) end"
     LiftCommand="%function(self) DIVINE_ENTITY:receptorLifted(self) end"
+    
+    W1Command="%function(self) DIVINE_ENTITY:receptorHitNote(self, DIVINE_ENTITY.TNS_MARVELOUS) end"
+    W2Command="%function(self) DIVINE_ENTITY:receptorHitNote(self, DIVINE_ENTITY.TNS_PERFECT) end"
+    W3Command="%function(self) DIVINE_ENTITY:receptorHitNote(self, DIVINE_ENTITY.TNS_GREAT) end"
+    W4Command="%function(self) DIVINE_ENTITY:receptorHitNote(self, DIVINE_ENTITY.TNS_GOOD) end"
+    W5Command="%function(self) DIVINE_ENTITY:receptorHitNote(self, DIVINE_ENTITY.TNS_BOO) end"
 >
 <children>
     <Layer
         File="sprites/Down Receptor Over.sprite"
+        HoldHeldCommand="%function(self) DIVINE_ENTITY:receptorHitNote(self, DIVINE_ENTITY.TNS_OK) end"
         InitCommand="%function(self)
             DIVINE_ENTITY:registerReceptor('Left Over', self)
             self:rotationz(90)

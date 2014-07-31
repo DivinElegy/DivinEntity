@@ -15,6 +15,15 @@
         NOTE_TYPE_ROLL_HEAD_ACTIVE = 'Roll Head active',
         NOTE_TYPE_ROLL_HEAD_INACTIVE = 'Roll Head inactive',
         EXPLOSION_NOTE_TYPE_TAP = 'Tap',
+        TNS_MARVELOUS='Fantastic',
+        TNS_PERFECT='Excellent',
+        TNS_GREAT='Great',
+        TNS_GOOD='Decent',
+        TNS_BOO='WayOff',
+        TNS_MISS='Miss',
+        TNS_HIT_MINE='HitMine',
+        TNS_OK='OK',
+        TNS_NG='NG'
     }
     
     --This function makes the fluent magic happen in getTapNotes, getExplosions and getReceptors.
@@ -105,11 +114,6 @@
             end
         end
 
-Trace('this is what I put in')
-for i,v in pairs(receptors) do
-Trace(i)
-end
-
         return receptors
     end
     
@@ -133,6 +137,12 @@ end
     function DIVINE_ENTITY:getReceptorState(direction, player)
         local actor = self.receptors[player][direction]        
         return self.receptorsLookupTable[tostring(actor)].state
+    end
+    
+    function DIVINE_ENTITY:receptorHitNote(actor, TNS)
+        local prefix = string.sub(self.receptorsLookupTable[tostring(actor)].name, 1, 2)
+        Trace('Broadcasting: ' .. prefix .. TNS)
+        MESSAGEMAN:Broadcast(prefix .. TNS)
     end
     
     function DIVINE_ENTITY:registerNote (noteType, name, actor)
