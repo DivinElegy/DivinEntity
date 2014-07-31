@@ -17,7 +17,7 @@
         EXPLOSION_NOTE_TYPE_TAP = 'Tap',
     }
     
-    --This function makes the fluent magic happen in getTapNotes and getExplosions.
+    --This function makes the fluent magic happen in getTapNotes, getExplosions and getReceptors.
     function DIVINE_ENTITY.catch(table, key)
         return function(...)
             local paramsToPassOn = {}
@@ -73,6 +73,44 @@
             self.receptors[PLAYER_2][direction] = actor
             self.receptorsLookupTable[tostring(actor)] = {name = 'P2' .. direction, state = self.STATE_NEUTRAL}
         end
+    end
+    
+    --[[
+    Initially I wanted this to only return the Over and Under sprites. But there is a weird issue
+    where those sprites do some strange stuff if they get far away from their initial position.
+    
+    So what this unfortunately means is this function behaves a bit different to the others.
+    
+    If you give it JUST a direction, it returns the actor frame, so it can be moved nicely.
+    If you give it at least sprite, then it will return the sprite actor itself.
+    If you give it nothing it returns all the actor frames.
+    --]]
+    function DIVINE_ENTITY:getReceptors(player, direction, sprite)
+        local receptors = {}
+        local mt = { __index = self.catch }
+
+        setmetatable(receptors, mt)
+        
+        for name,actor in pairs(self.receptors[player]) do
+            if direction and sprite then
+                if string.find(name, direction .. ' ' .. sprite) then receptors[name] = actor end
+            elseif direction then
+                --return the frame not the two actors in it
+                if name == direction then receptors[name] = actor end
+            elseif sprite then
+                --return the actor in the frame, not the frame it self. The actor frames all have names <= 5
+                if string.find(name, sprite) and string.len(name) > 5 then receptors[name] = actor end
+            else
+                if string.len(name) <= 5 then receptors[name] = actor end
+            end
+        end
+
+Trace('this is what I put in')
+for i,v in pairs(receptors) do
+Trace(i)
+end
+
+        return receptors
     end
     
     function DIVINE_ENTITY:receptorPressed(actor)
