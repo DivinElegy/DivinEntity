@@ -300,11 +300,52 @@
         return DIVINE_ENTITY:getExplosions(self.EXPLOSION_NOTE_TYPE_TAP, direction, explosionType, TNS)
     end    
 end">
- <children>
-  <Actor File='sprites/4th.sprite'
-   InitCommand='%function (self)
-        DIVINE_ENTITY:registerTapNote("Left Tap Note 4th", self)
-        self:rotationz(90);
-    end' />
- </children>
-</ActorFrame>
+<children>
+    <Actor File='sprites/4th.sprite'
+        InitCommand='%function (self)
+            DIVINE_ENTITY:registerTapNote("Left Tap Note 4th Clone 5", self)
+            self:hidden(1)
+            self:rotationz(90)
+        end'
+    />
+    
+    <Actor File='sprites/4th.sprite'
+        InitCommand='%function (self)
+            DIVINE_ENTITY:registerTapNote("Left Tap Note 4th Clone 4", self)
+            self:hidden(1)
+            self:rotationz(90)
+        end'
+    />
+    
+    <Actor File='sprites/4th.sprite'
+        InitCommand='%function (self)
+            DIVINE_ENTITY:registerTapNote("Left Tap Note 4th Clone 3", self)
+            self:hidden(1)
+            self:rotationz(90)
+        end'
+    />
+    
+    <Actor File='sprites/4th.sprite'
+        InitCommand='%function (self)
+            DIVINE_ENTITY:registerTapNote("Left Tap Note 4th Clone 2", self)
+            self:hidden(1)
+            self:rotationz(90)
+        end'
+    />
+    
+    <Actor File='sprites/4th.sprite'
+        InitCommand='%function (self)
+            DIVINE_ENTITY:registerTapNote("Left Tap Note 4th Clone 1", self)
+            self:hidden(1)
+            self:rotationz(90)
+        end'
+    />
+    
+    <Actor File='sprites/4th.sprite'
+        InitCommand='%function (self)
+            DIVINE_ENTITY:registerTapNote("Left Tap Note 4th Clone 0", self)
+            self:hidden(0)
+            self:rotationz(90)
+        end'
+    />
+</children></ActorFrame>

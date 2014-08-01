@@ -2,8 +2,54 @@
 <Actor
     File='sprites/64th.sprite'
     InitCommand='%function (self)
-        DIVINE_ENTITY:registerTapNote("Right Tap Note 192nd", self)
-        self:rotationz(-90);
+        DIVINE_ENTITY:registerTapNote("Right Tap Note 192nd Clone 5", self)
+        self:hidden(1)
+        self:rotationz(-90)
+    end'
+/>
+
+<Actor
+    File='sprites/64th.sprite'
+    InitCommand='%function (self)
+        DIVINE_ENTITY:registerTapNote("Right Tap Note 192nd Clone 4", self)
+        self:hidden(1)
+        self:rotationz(-90)
+    end'
+/>
+
+<Actor
+    File='sprites/64th.sprite'
+    InitCommand='%function (self)
+        DIVINE_ENTITY:registerTapNote("Right Tap Note 192nd Clone 3", self)
+        self:hidden(1)
+        self:rotationz(-90)
+    end'
+/>
+
+<Actor
+    File='sprites/64th.sprite'
+    InitCommand='%function (self)
+        DIVINE_ENTITY:registerTapNote("Right Tap Note 192nd Clone 2", self)
+        self:hidden(1)
+        self:rotationz(-90)
+    end'
+/>
+
+<Actor
+    File='sprites/64th.sprite'
+    InitCommand='%function (self)
+        DIVINE_ENTITY:registerTapNote("Right Tap Note 192nd Clone 1", self)
+        self:hidden(1)
+        self:rotationz(-90)
+    end'
+/>
+
+<Actor
+    File='sprites/64th.sprite'
+    InitCommand='%function (self)
+        DIVINE_ENTITY:registerTapNote("Right Tap Note 192nd Clone 0", self)
+        self:hidden(0)
+        self:rotationz(-90)
     end'
 />
 </children></ActorFrame>

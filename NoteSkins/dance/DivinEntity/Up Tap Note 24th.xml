@@ -2,8 +2,54 @@
 <Actor
     File='sprites/12th.sprite'
     InitCommand='%function (self)
-        DIVINE_ENTITY:registerTapNote("Up Tap Note 24th", self)
-        self:rotationz(180);
+        DIVINE_ENTITY:registerTapNote("Up Tap Note 24th Clone 5", self)
+        self:hidden(1)
+        self:rotationz(180)
+    end'
+/>
+
+<Actor
+    File='sprites/12th.sprite'
+    InitCommand='%function (self)
+        DIVINE_ENTITY:registerTapNote("Up Tap Note 24th Clone 4", self)
+        self:hidden(1)
+        self:rotationz(180)
+    end'
+/>
+
+<Actor
+    File='sprites/12th.sprite'
+    InitCommand='%function (self)
+        DIVINE_ENTITY:registerTapNote("Up Tap Note 24th Clone 3", self)
+        self:hidden(1)
+        self:rotationz(180)
+    end'
+/>
+
+<Actor
+    File='sprites/12th.sprite'
+    InitCommand='%function (self)
+        DIVINE_ENTITY:registerTapNote("Up Tap Note 24th Clone 2", self)
+        self:hidden(1)
+        self:rotationz(180)
+    end'
+/>
+
+<Actor
+    File='sprites/12th.sprite'
+    InitCommand='%function (self)
+        DIVINE_ENTITY:registerTapNote("Up Tap Note 24th Clone 1", self)
+        self:hidden(1)
+        self:rotationz(180)
+    end'
+/>
+
+<Actor
+    File='sprites/12th.sprite'
+    InitCommand='%function (self)
+        DIVINE_ENTITY:registerTapNote("Up Tap Note 24th Clone 0", self)
+        self:hidden(0)
+        self:rotationz(180)
     end'
 />
 </children></ActorFrame>
