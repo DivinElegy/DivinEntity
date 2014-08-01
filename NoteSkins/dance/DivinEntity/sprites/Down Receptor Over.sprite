@@ -10,4 +10,4 @@ Frame0003=3
 Delay0003=1
 Frame0004=0
 Delay0004=0.05
-InitCommand=EffectClock,beat;DiffuseRamp;EffectColor1,0.4,0.4,0.4,1;EffectColor2,1,1,1,1,1;effectperiod,0.5;EffectDelay,0.5;EffectOffset,0.05
+InitCommand=playcommand,Register;EffectClock,beat;DiffuseRamp;EffectColor1,0.4,0.4,0.4,1;EffectColor2,1,1,1,1,1;effectperiod,0.5;EffectDelay,0.5;EffectOffset,0.05

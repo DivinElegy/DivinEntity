@@ -2,7 +2,47 @@
 <Actor
     File='sprites/4th.sprite'
     InitCommand='%function (self)
-        DIVINE_ENTITY:registerTapNote("Down Tap Note 4th", self)
+        DIVINE_ENTITY:registerTapNote("Down Tap Note 4th Clone 5", self)
+        self:rotationz(0);
+    end'
+/>
+
+<Actor
+    File='sprites/4th.sprite'
+    InitCommand='%function (self)
+        DIVINE_ENTITY:registerTapNote("Down Tap Note 4th Clone 4", self)
+        self:rotationz(0);
+    end'
+/>
+
+<Actor
+    File='sprites/4th.sprite'
+    InitCommand='%function (self)
+        DIVINE_ENTITY:registerTapNote("Down Tap Note 4th Clone 3", self)
+        self:rotationz(0);
+    end'
+/>
+
+<Actor
+    File='sprites/4th.sprite'
+    InitCommand='%function (self)
+        DIVINE_ENTITY:registerTapNote("Down Tap Note 4th Clone 2", self)
+        self:rotationz(0);
+    end'
+/>
+
+<Actor
+    File='sprites/4th.sprite'
+    InitCommand='%function (self)
+        DIVINE_ENTITY:registerTapNote("Down Tap Note 4th Clone 1", self)
+        self:rotationz(0);
+    end'
+/>
+
+<Actor
+    File='sprites/4th.sprite'
+    InitCommand='%function (self)
+        DIVINE_ENTITY:registerTapNote("Down Tap Note 4th Clone 0", self)
         self:rotationz(0);
     end'
 />

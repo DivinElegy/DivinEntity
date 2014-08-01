@@ -9,11 +9,13 @@
     W3Command="%function(self) DIVINE_ENTITY:receptorHitNote(self, DIVINE_ENTITY.TNS_GREAT) end"
     W4Command="%function(self) DIVINE_ENTITY:receptorHitNote(self, DIVINE_ENTITY.TNS_GOOD) end"
     W5Command="%function(self) DIVINE_ENTITY:receptorHitNote(self, DIVINE_ENTITY.TNS_BOO) end"
+    W6Command="%function(self) DIVINE_ENTITY:receptorHitNote(self, DIVINE_ENTITY.TNS_HIT_MINE) end"
 >
 <children>
+    <!-- The RegisterCommands are played from the .sprite files to avoid defining InitCommand twice. -->
     <Layer
         File="sprites/Down Receptor Over.sprite"
-        InitCommand="%function(self)
+        RegisterCommand="%function(self)
             DIVINE_ENTITY:registerReceptor('Down Over', self)
             self:rotationz(0)
         end"
@@ -21,7 +23,7 @@
     
     <Layer
         File="sprites/Down Receptor Under.sprite"
-        InitCommand="%function(self)
+        RegisterCommand="%function(self)
             DIVINE_ENTITY:registerReceptor('Down Under', self)
             self:rotationz(0)
         end"

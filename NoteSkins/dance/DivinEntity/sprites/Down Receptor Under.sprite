@@ -10,6 +10,6 @@ Frame0003=3
 Delay0003=1
 Frame0004=0
 Delay0004=0.05
-InitCommand=blend,add;diffusealpha,0
+InitCommand=playcommand,Register;blend,add;diffusealpha,0
 PressCommand=diffusealpha,0.2
 LiftCommand=diffusealpha,0

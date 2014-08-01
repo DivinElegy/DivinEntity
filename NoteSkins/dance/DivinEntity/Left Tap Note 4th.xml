@@ -2,7 +2,8 @@
  InitCommand="%function(self)                
     DIVINE_ENTITY = {
         notes={},
-        explosions={},
+        explosions={}, --referred to as ghost arrows almost everywhere else in SM
+        mines={},
         receptors={[PLAYER_1]={}, [PLAYER_2]={}},
         receptorsLookupTable={},
         
@@ -22,8 +23,8 @@
         TNS_BOO='WayOff',
         TNS_MISS='Miss',
         TNS_HIT_MINE='HitMine',
-        TNS_OK='OK',
-        TNS_NG='NG'
+        HNS_OK='OK',
+        HNS_NG='NG'
     }
     
     --This function makes the fluent magic happen in getTapNotes, getExplosions and getReceptors.
@@ -153,20 +154,32 @@
         self.notes[noteType][name] = actor
     end
 	
-    function DIVINE_ENTITY:getNotes(noteType, direction, quant)
-        local direction = direction or ''
-        local quant = quant or ''
-        
+    function DIVINE_ENTITY:getNotes(noteType, direction, quant, clone)        
         local arrows = {}
         local mt = { __index = self.catch }
 
         setmetatable(arrows, mt)
 
         --No string.match in Lua 5.0 :[
-        for name,actor in pairs(self.notes[noteType]) do
-            if direction and quant then
-                if string.find(name, direction .. ' ' .. noteType .. ' ' .. quant) then arrows[name] = actor end
+        for name,actor in pairs(self.notes[noteType]) do                      
+            if direction and quant and clone then                               
+                if string.find(name, direction .. ' ' .. noteType .. ' ' .. quant .. ' ' .. clone) then arrows[name] = actor end
+            elseif direction and quant then
+                if string.find(name, direction) and string.find(name, quant) then arrows[name] = actor end
+            elseif direction and clone then
+                if string.find(name, direction) and string.find(name, clone) then arrows[name] = actor end
+            elseif quant and clone then
+                if string.find(name, quant) and string.find(name, clone) then arrows[name] = actor end
+            elseif direction then
+                if string.find(name, direction) then arrows[name] = actor end 
+            elseif quant then
+                if string.find(name, quant) then arrows[name] = actor end 
+            elseif clone then
+                if string.find(name, clone) then arrows[name] = actor end 
+            else
+                arrows[name] = actor
             end
+            
         end    
 
         return arrows
@@ -176,8 +189,8 @@
         DIVINE_ENTITY:registerNote(self.NOTE_TYPE_TAP, name, actor)
     end
       
-    function DIVINE_ENTITY:getTapNotes(direction, quant)
-        return DIVINE_ENTITY:getNotes(self.NOTE_TYPE_TAP, direction, quant) 
+    function DIVINE_ENTITY:getTapNotes(direction, quant, clone)
+        return DIVINE_ENTITY:getNotes(self.NOTE_TYPE_TAP, direction, quant, clone) 
     end 
     
     function DIVINE_ENTITY:registerActiveHoldHead(name, actor)    
@@ -210,6 +223,24 @@
     
     function DIVINE_ENTITY:getInactiveRollHeads(direction, quant)
         return DIVINE_ENTITY:getNotes(self.NOTE_TYPE_ROLL_HEAD_INACTIVE, direction, quant)
+    end
+    
+    function DIVINE_ENTITY:registerMine(name, actor)
+        self.mines[name] = actor
+    end
+    
+    function DIVINE_ENTITY:getMines(direction)
+        local direction = direction or ''
+        local mines = {}
+        local mt = { __index = self.catch }
+        
+        setmetatable(mines,mt)
+        
+        for name,actor in pairs(self.mines) do
+            if string.find(name, direction) then mines[name] = actor end            
+        end
+        
+        return mines
     end
     
     function DIVINE_ENTITY:registerExplosion(noteType, name, actor)
