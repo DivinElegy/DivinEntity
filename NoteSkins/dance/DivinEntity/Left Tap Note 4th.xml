@@ -7,6 +7,8 @@
         receptors={[PLAYER_1]={}, [PLAYER_2]={}},
         receptorsLookupTable={},
         
+        metrics = {GhostArrowDim={}, GhostArrowBright={}, HoldGhostArrow={}, ReceptorArrow={}},
+
         --some constants
         STATE_NEUTRAL = 1,
         STATE_PRESSED = 2,
@@ -27,6 +29,16 @@
         HNS_NG='NG'
     }
 
+    function DIVINE_ENTITY:GetMetricCallback(section, command)
+        return self.metrics[section][command]
+    end
+    
+    function DIVINE_ENTITY:SetMetricCallback(section, command, callback)
+        self.metrics[section][command] = callback
+    end
+    
+    DIVINE_ENTITY:SetMetricCallback('GhostArrowDim', 'Marvelous', function(actor) actor:diffusealpha(1.2) actor:zoom(1.1) actor:accelerate(0.15) actor:zoom(1.0) actor:diffusealpha(0) actor:glowshift() actor:effectperiod(0.05) actor:effectcolor1(1,1,1,0) actor:effectcolor2(1,1,1,0.5) end)
+    
     ------------------------------
     --Generic reusable functions--
     ------------------------------
