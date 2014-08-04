@@ -1,3 +1,5 @@
+**THIS README IS STILL INCOMPLETE/INACCURATE. DO NOT RELY ON IT YET**
+
 #What is the "Divine Entity"?
 
 This NoteSkin sets up a Lua object (well, table really) called DIVINE_ENTITY, which is global and acessible from inside a simfile (as long as the "DivinEntity" NoteSkin is selected, obviously).
