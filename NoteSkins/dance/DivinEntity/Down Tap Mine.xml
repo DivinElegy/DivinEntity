@@ -2,7 +2,7 @@
 <Actor
     File='sprites/Mine.sprite'
     InitCommand='%function (self)
-        DIVINE_ENTITY:registerMine("Down Tap Mine", self)
+        DIVINE_ENTITY:RegisterMine("Down Tap Mine", self)
     end'
 />
 </children></ActorFrame>

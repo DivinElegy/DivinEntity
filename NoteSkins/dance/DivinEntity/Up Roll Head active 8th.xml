@@ -2,7 +2,7 @@
 <Actor
     File='sprites/8th.sprite'
     InitCommand='%function (self)
-        DIVINE_ENTITY:registerActiveRollHead("Up Roll Head active 8th", self)
+        DIVINE_ENTITY:RegisterActiveRollHead("Up Roll Head active 8th", self)
         self:rotationz(180);
     end'
 />

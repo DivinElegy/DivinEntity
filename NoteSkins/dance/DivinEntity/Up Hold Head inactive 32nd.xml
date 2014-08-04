@@ -2,7 +2,7 @@
 <Actor
     File='sprites/32nd.sprite'
     InitCommand='%function (self)
-        DIVINE_ENTITY:registerInactiveHoldHead("Up Hold Head inactive 32nd", self)
+        DIVINE_ENTITY:RegisterInactiveHoldHead("Up Hold Head inactive 32nd", self)
         self:rotationz(180);
     end'
 />

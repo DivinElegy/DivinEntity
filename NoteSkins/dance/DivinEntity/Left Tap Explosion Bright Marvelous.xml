@@ -1,7 +1,7 @@
 <Actor
     File='sprites/Down Tap Explosion Dim Marvelous'
     InitCommand='%function (self)
-        DIVINE_ENTITY:registerTapExplosion("Left Tap Explosion Bright Marvelous", self)
+        DIVINE_ENTITY:RegisterTapExplosion("Left Tap Explosion Bright Marvelous", self)
         self:rotationz(90)
     end'
 />

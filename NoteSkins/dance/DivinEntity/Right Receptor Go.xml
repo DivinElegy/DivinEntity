@@ -1,22 +1,22 @@
 <!-- "effectoffset,0.05" start the flash 5% before the beat -->
 <ActorFrame 
-    InitCommand="%function(self) DIVINE_ENTITY:registerReceptor('Right', self) end"
-    PressCommand="%function(self) DIVINE_ENTITY:receptorPressed(self) end"
-    LiftCommand="%function(self) DIVINE_ENTITY:receptorLifted(self) end"
+    InitCommand="%function(self) DIVINE_ENTITY:RegisterReceptor('Right', self) end"
+    PressCommand="%function(self) DIVINE_ENTITY:ReceptorPressed(self) end"
+    LiftCommand="%function(self) DIVINE_ENTITY:ReceptorLifted(self) end"
     
-    W1Command="%function(self) DIVINE_ENTITY:receptorHitNote(self, DIVINE_ENTITY.TNS_MARVELOUS) end"
-    W2Command="%function(self) DIVINE_ENTITY:receptorHitNote(self, DIVINE_ENTITY.TNS_PERFECT) end"
-    W3Command="%function(self) DIVINE_ENTITY:receptorHitNote(self, DIVINE_ENTITY.TNS_GREAT) end"
-    W4Command="%function(self) DIVINE_ENTITY:receptorHitNote(self, DIVINE_ENTITY.TNS_GOOD) end"
-    W5Command="%function(self) DIVINE_ENTITY:receptorHitNote(self, DIVINE_ENTITY.TNS_BOO) end"
-    W6Command="%function(self) DIVINE_ENTITY:receptorHitNote(self, DIVINE_ENTITY.TNS_HIT_MINE) end"
+    W1Command="%function(self) DIVINE_ENTITY:ReceptorHitNote(self, DIVINE_ENTITY.TNS_MARVELOUS) end"
+    W2Command="%function(self) DIVINE_ENTITY:ReceptorHitNote(self, DIVINE_ENTITY.TNS_PERFECT) end"
+    W3Command="%function(self) DIVINE_ENTITY:ReceptorHitNote(self, DIVINE_ENTITY.TNS_GREAT) end"
+    W4Command="%function(self) DIVINE_ENTITY:ReceptorHitNote(self, DIVINE_ENTITY.TNS_GOOD) end"
+    W5Command="%function(self) DIVINE_ENTITY:ReceptorHitNote(self, DIVINE_ENTITY.TNS_BOO) end"
+    W6Command="%function(self) DIVINE_ENTITY:ReceptorHitNote(self, DIVINE_ENTITY.TNS_HIT_MINE) end"
 >
 <children>
     <!-- The RegisterCommands are played from the .sprite files to avoid defining InitCommand twice. -->
     <Layer
         File="sprites/Down Receptor Over.sprite"
         RegisterCommand="%function(self)
-            DIVINE_ENTITY:registerReceptor('Right Over', self)
+            DIVINE_ENTITY:RegisterReceptor('Right Over', self)
             self:rotationz(-90)
         end"
     />
@@ -24,7 +24,7 @@
     <Layer
         File="sprites/Down Receptor Under.sprite"
         RegisterCommand="%function(self)
-            DIVINE_ENTITY:registerReceptor('Right Under', self)
+            DIVINE_ENTITY:RegisterReceptor('Right Under', self)
             self:rotationz(-90)
         end"
     />

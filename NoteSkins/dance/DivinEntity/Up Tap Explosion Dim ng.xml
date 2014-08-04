@@ -1,7 +1,7 @@
 <Actor
     File='sprites/Down Tap Explosion Dim Perfect'
     InitCommand='%function (self)
-        DIVINE_ENTITY:registerTapExplosion("Up Tap Explosion Dim ng", self)
+        DIVINE_ENTITY:RegisterTapExplosion("Up Tap Explosion Dim ng", self)
         self:rotationz(180)
     end'
 />

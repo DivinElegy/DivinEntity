@@ -27,7 +27,7 @@
         HNS_NG='NG'
     }
     
-    --This function makes the fluent magic happen in getTapNotes, getExplosions and getReceptors.
+    --This function makes the fluent magic happen in GetTapNotes, GetExplosions and GetReceptors.
     function DIVINE_ENTITY.catch(table, key)
         return function(...)
             local paramsToPassOn = {}
@@ -52,17 +52,17 @@
     end
 
     --[[
-    p1's stuff is loaded first. So registerReceptor will always
+    p1's stuff is loaded first. So RegisterReceptor will always
     be called from p1 first. Therefore it should be sufficient
     to check if we have a actor for p1. If we don't then this
     actor must be p1s, otherwise it is p2s.
 
     We also put the string value of the actor in a lookup table.
     This way, in the receptor xml files, all we have to do on a pressCommand
-    is DIVINE_ENTITY:receptorPressed(self) and we can lookup what arrow that
+    is DIVINE_ENTITY:ReceptorPressed(self) and we can lookup what arrow that
     actor is, and broadcast accordingly.
     --]]
-    function DIVINE_ENTITY:registerReceptor(direction, actor)
+    function DIVINE_ENTITY:RegisterReceptor(direction, actor)
     
         --Case 1: P1 _XOR_ P2. We know exactly who the receptors belong to.
         if GAMESTATE:IsPlayerEnabled(PLAYER_1) and not GAMESTATE:IsPlayerEnabled(PLAYER_2) then
@@ -95,7 +95,7 @@
     If you give it at least sprite, then it will return the sprite actor itself.
     If you give it nothing it returns all the actor frames.
     --]]
-    function DIVINE_ENTITY:getReceptors(player, direction, sprite)
+    function DIVINE_ENTITY:GetReceptors(player, direction, sprite)
         local receptors = {}
         local mt = { __index = self.catch }
 
@@ -118,35 +118,35 @@
         return receptors
     end
     
-    function DIVINE_ENTITY:receptorPressed(actor)
+    function DIVINE_ENTITY:ReceptorPressed(actor)
         local prefix = self.receptorsLookupTable[tostring(actor)].name
         self.receptorsLookupTable[tostring(actor)].state = self.STATE_PRESSED
         MESSAGEMAN:Broadcast('Step' .. prefix .. 'Pressed')
     end
 
-    function DIVINE_ENTITY:receptorLifted(actor)
+    function DIVINE_ENTITY:ReceptorLifted(actor)
         local prefix = self.receptorsLookupTable[tostring(actor)].name
         self.receptorsLookupTable[tostring(actor)].state = self.STATE_NEUTRAL
         MESSAGEMAN:Broadcast('Step' .. prefix .. 'Lifted')
     end
 
-    function DIVINE_ENTITY:isReceptorPressed(direction, player)
+    function DIVINE_ENTITY:IsReceptorPressed(direction, player)
         local actor = self.receptors[player][direction]
         return self.receptorsLookupTable[tostring(actor)].state == self.STATE_PRESSED
     end
     
-    function DIVINE_ENTITY:getReceptorState(direction, player)
+    function DIVINE_ENTITY:GetReceptorState(direction, player)
         local actor = self.receptors[player][direction]        
         return self.receptorsLookupTable[tostring(actor)].state
     end
     
-    function DIVINE_ENTITY:receptorHitNote(actor, TNS)
+    function DIVINE_ENTITY:ReceptorHitNote(actor, TNS)
         local prefix = string.sub(self.receptorsLookupTable[tostring(actor)].name, 1, 2)
         Trace('Broadcasting: ' .. prefix .. TNS)
         MESSAGEMAN:Broadcast(prefix .. TNS)
     end
     
-    function DIVINE_ENTITY:registerNote (noteType, name, actor)
+    function DIVINE_ENTITY:RegisterNote (noteType, name, actor)
         if self.notes[noteType] == nil then
             self.notes[noteType] = {}
         end
@@ -154,7 +154,7 @@
         self.notes[noteType][name] = actor
     end
 	
-    function DIVINE_ENTITY:getNotes(noteType, direction, quant, clone)        
+    function DIVINE_ENTITY:GetNotes(noteType, direction, quant, clone)        
         local arrows = {}
         local mt = { __index = self.catch }
 
@@ -185,51 +185,51 @@
         return arrows
     end
        
-    function DIVINE_ENTITY:registerTapNote(name, actor)
-        DIVINE_ENTITY:registerNote(self.NOTE_TYPE_TAP, name, actor)
+    function DIVINE_ENTITY:RegisterTapNote(name, actor)
+        DIVINE_ENTITY:RegisterNote(self.NOTE_TYPE_TAP, name, actor)
     end
       
-    function DIVINE_ENTITY:getTapNotes(direction, quant, clone)
-        return DIVINE_ENTITY:getNotes(self.NOTE_TYPE_TAP, direction, quant, clone) 
+    function DIVINE_ENTITY:GetTapNotes(direction, quant, clone)
+        return DIVINE_ENTITY:GetNotes(self.NOTE_TYPE_TAP, direction, quant, clone) 
     end 
     
-    function DIVINE_ENTITY:registerActiveHoldHead(name, actor)    
-        DIVINE_ENTITY:registerNote(self.NOTE_TYPE_HOLD_HEAD_ACTIVE, name, actor)
+    function DIVINE_ENTITY:RegisterActiveHoldHead(name, actor)    
+        DIVINE_ENTITY:RegisterNote(self.NOTE_TYPE_HOLD_HEAD_ACTIVE, name, actor)
     end
     
-    function DIVINE_ENTITY:getActiveHoldHeads(direction, quant)
-        return DIVINE_ENTITY:getNotes(self.NOTE_TYPE_HOLD_HEAD_ACTIVE, direction, quant)
+    function DIVINE_ENTITY:GetActiveHoldHeads(direction, quant)
+        return DIVINE_ENTITY:GetNotes(self.NOTE_TYPE_HOLD_HEAD_ACTIVE, direction, quant)
     end
     
-    function DIVINE_ENTITY:registerInactiveHoldHead(name, actor)    
-        DIVINE_ENTITY:registerNote(self.NOTE_TYPE_HOLD_HEAD_INACTIVE, name, actor)
+    function DIVINE_ENTITY:RegisterInactiveHoldHead(name, actor)    
+        DIVINE_ENTITY:RegisterNote(self.NOTE_TYPE_HOLD_HEAD_INACTIVE, name, actor)
     end
     
-    function DIVINE_ENTITY:getInactiveHoldHeads(direction, quant)
-        return DIVINE_ENTITY:getNotes(self.NOTE_TYPE_HOLD_HEAD_INACTIVE, direction, quant)
+    function DIVINE_ENTITY:GetInactiveHoldHeads(direction, quant)
+        return DIVINE_ENTITY:GetNotes(self.NOTE_TYPE_HOLD_HEAD_INACTIVE, direction, quant)
     end 
     
-    function DIVINE_ENTITY:registerActiveRollHead(name, actor)    
-        DIVINE_ENTITY:registerNote(self.NOTE_TYPE_ROLL_HEAD_ACTIVE, name, actor)
+    function DIVINE_ENTITY:RegisterActiveRollHead(name, actor)    
+        DIVINE_ENTITY:RegisterNote(self.NOTE_TYPE_ROLL_HEAD_ACTIVE, name, actor)
     end
     
-    function DIVINE_ENTITY:getActiveRollHeads(direction, quant)
-        return DIVINE_ENTITY:getNotes(self.NOTE_TYPE_ROLL_HEAD_ACTIVE, direction, quant)
+    function DIVINE_ENTITY:GetActiveRollHeads(direction, quant)
+        return DIVINE_ENTITY:GetNotes(self.NOTE_TYPE_ROLL_HEAD_ACTIVE, direction, quant)
     end
     
-    function DIVINE_ENTITY:registerInactiveRollHead(name, actor)    
-        DIVINE_ENTITY:registerNote(self.NOTE_TYPE_ROLL_HEAD_INACTIVE, name, actor)
+    function DIVINE_ENTITY:RegisterInactiveRollHead(name, actor)    
+        DIVINE_ENTITY:RegisterNote(self.NOTE_TYPE_ROLL_HEAD_INACTIVE, name, actor)
     end
     
-    function DIVINE_ENTITY:getInactiveRollHeads(direction, quant)
-        return DIVINE_ENTITY:getNotes(self.NOTE_TYPE_ROLL_HEAD_INACTIVE, direction, quant)
+    function DIVINE_ENTITY:GetInactiveRollHeads(direction, quant)
+        return DIVINE_ENTITY:GetNotes(self.NOTE_TYPE_ROLL_HEAD_INACTIVE, direction, quant)
     end
     
-    function DIVINE_ENTITY:registerMine(name, actor)
+    function DIVINE_ENTITY:RegisterMine(name, actor)
         self.mines[name] = actor
     end
     
-    function DIVINE_ENTITY:getMines(direction)
+    function DIVINE_ENTITY:GetMines(direction)
         local direction = direction or ''
         local mines = {}
         local mt = { __index = self.catch }
@@ -243,7 +243,7 @@
         return mines
     end
     
-    function DIVINE_ENTITY:registerExplosion(noteType, name, actor)
+    function DIVINE_ENTITY:RegisterExplosion(noteType, name, actor)
         if self.explosions[noteType] == nil then
             self.explosions[noteType] = {}
         end
@@ -252,11 +252,11 @@
     end
     
     --[[
-    This is very similar to getTapNotes but with explosions we have an extra thing to match.
+    This is very similar to GetTapNotes but with explosions we have an extra thing to match.
     If I was smart I might refactor these functions in to one (but even then, that might be too
     messy. For now I don't have time so this has to do
     --]]
-    function DIVINE_ENTITY:getExplosions(noteType, direction, explosionType, TNS)
+    function DIVINE_ENTITY:GetExplosions(noteType, direction, explosionType, TNS)
         --local direction = direction or ''
         --local explosionType = explosionType or ''
         --local TNS = TNS or ''
@@ -292,18 +292,18 @@
         return explosions
     end
     
-    function DIVINE_ENTITY:registerTapExplosion(name, actor)
-        DIVINE_ENTITY:registerExplosion(self.EXPLOSION_NOTE_TYPE_TAP, name, actor)
+    function DIVINE_ENTITY:RegisterTapExplosion(name, actor)
+        DIVINE_ENTITY:RegisterExplosion(self.EXPLOSION_NOTE_TYPE_TAP, name, actor)
     end
     
-    function DIVINE_ENTITY:getTapExplosions(direction, explosionType, TNS)
-        return DIVINE_ENTITY:getExplosions(self.EXPLOSION_NOTE_TYPE_TAP, direction, explosionType, TNS)
+    function DIVINE_ENTITY:GetTapExplosions(direction, explosionType, TNS)
+        return DIVINE_ENTITY:GetExplosions(self.EXPLOSION_NOTE_TYPE_TAP, direction, explosionType, TNS)
     end    
 end">
 <children>
     <Actor File='sprites/4th.sprite'
         InitCommand='%function (self)
-            DIVINE_ENTITY:registerTapNote("Left Tap Note 4th Clone 5", self)
+            DIVINE_ENTITY:RegisterTapNote("Left Tap Note 4th Clone 5", self)
             self:hidden(1)
             self:rotationz(90)
         end'
@@ -311,7 +311,7 @@ end">
     
     <Actor File='sprites/4th.sprite'
         InitCommand='%function (self)
-            DIVINE_ENTITY:registerTapNote("Left Tap Note 4th Clone 4", self)
+            DIVINE_ENTITY:RegisterTapNote("Left Tap Note 4th Clone 4", self)
             self:hidden(1)
             self:rotationz(90)
         end'
@@ -319,7 +319,7 @@ end">
     
     <Actor File='sprites/4th.sprite'
         InitCommand='%function (self)
-            DIVINE_ENTITY:registerTapNote("Left Tap Note 4th Clone 3", self)
+            DIVINE_ENTITY:RegisterTapNote("Left Tap Note 4th Clone 3", self)
             self:hidden(1)
             self:rotationz(90)
         end'
@@ -327,7 +327,7 @@ end">
     
     <Actor File='sprites/4th.sprite'
         InitCommand='%function (self)
-            DIVINE_ENTITY:registerTapNote("Left Tap Note 4th Clone 2", self)
+            DIVINE_ENTITY:RegisterTapNote("Left Tap Note 4th Clone 2", self)
             self:hidden(1)
             self:rotationz(90)
         end'
@@ -335,7 +335,7 @@ end">
     
     <Actor File='sprites/4th.sprite'
         InitCommand='%function (self)
-            DIVINE_ENTITY:registerTapNote("Left Tap Note 4th Clone 1", self)
+            DIVINE_ENTITY:RegisterTapNote("Left Tap Note 4th Clone 1", self)
             self:hidden(1)
             self:rotationz(90)
         end'
@@ -343,7 +343,7 @@ end">
     
     <Actor File='sprites/4th.sprite'
         InitCommand='%function (self)
-            DIVINE_ENTITY:registerTapNote("Left Tap Note 4th Clone 0", self)
+            DIVINE_ENTITY:RegisterTapNote("Left Tap Note 4th Clone 0", self)
             self:hidden(0)
             self:rotationz(90)
         end'

@@ -2,7 +2,7 @@
 <Actor
     File='sprites/64th.sprite'
     InitCommand='%function (self)
-        DIVINE_ENTITY:registerInactiveRollHead("Up Roll Head inactive 192nd", self)
+        DIVINE_ENTITY:RegisterInactiveRollHead("Up Roll Head inactive 192nd", self)
         self:rotationz(180);
     end'
 />
