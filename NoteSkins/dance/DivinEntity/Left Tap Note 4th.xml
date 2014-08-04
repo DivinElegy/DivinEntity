@@ -1,8 +1,8 @@
 <ActorFrame
- InitCommand="%function(self)                
+ InitCommand="%function(self)
     DIVINE_ENTITY = {
         notes={},
-        explosions={}, --referred to as ghost arrows almost everywhere else in SM
+        explosions={}, --referred to as ghost arrows almost everywhere else in SM, including the NoteSkin metrics.
         mines={},
         receptors={[PLAYER_1]={}, [PLAYER_2]={}},
         receptorsLookupTable={},
@@ -15,7 +15,7 @@
         NOTE_TYPE_HOLD_HEAD_INACTIVE = 'Hold Head inactive',
         NOTE_TYPE_ROLL_HEAD_ACTIVE = 'Roll Head active',
         NOTE_TYPE_ROLL_HEAD_INACTIVE = 'Roll Head inactive',
-        EXPLOSION_NOTE_TYPE_TAP = 'Tap',
+        EXPLOSION_TYPE_TAP = 'Tap Explosion',
         TNS_MARVELOUS='Fantastic',
         TNS_PERFECT='Excellent',
         TNS_GREAT='Great',
@@ -26,12 +26,20 @@
         HNS_OK='OK',
         HNS_NG='NG'
     }
+
+    ------------------------------
+    --Generic reusable functions--
+    ------------------------------
     
-    --This function makes the fluent magic happen in GetTapNotes, GetExplosions and GetReceptors.
+    --This function makes the fluent magic happen.
     function DIVINE_ENTITY.catch(table, key)
         return function(...)
             local paramsToPassOn = {}
         
+            --[[
+            I don't know why I had to do this workaround, but while loops
+            wouldn't play nice with the vararg so here we are.
+            --]]            
             tick = 1;
             for i,v in pairs(arg) do
                 if type(v) ~= 'table' then
@@ -52,18 +60,45 @@
     end
 
     --[[
-    p1's stuff is loaded first. So RegisterReceptor will always
-    be called from p1 first. Therefore it should be sufficient
-    to check if we have a actor for p1. If we don't then this
-    actor must be p1s, otherwise it is p2s.
-
+    This function takes in a table of strings to find inside str
+    if and only if str contains all of them, it returns true
+    --]]  
+    function DIVINE_ENTITY.contains(str, stringsToFind)
+        for k,v in pairs(stringsToFind) do
+            if not string.find(str, v) then return false end
+        end
+        
+        return true
+    end
+    
+    --Generic lookup function to use in wrappers    
+    function DIVINE_ENTITY:GetActors(actorTable, nameParams)
+        local matchedActorsTable = {}
+        local mt = { __index = self.catch }
+        setmetatable(matchedActorsTable, mt)
+        
+        for name,actor in pairs(actorTable) do
+            --return only actors that match our criteria set out in nameParams
+            if self.contains(name, nameParams) then matchedActorsTable[name] = actor end
+        end
+        
+        return matchedActorsTable
+    end
+    
+    ----------------------
+    --Receptor functions--
+    ----------------------
+    
+    --[[
+    The receptors are loaded once for each player, so we can exploit this to figure
+    out which set belongs to which player.
+    
     We also put the string value of the actor in a lookup table.
     This way, in the receptor xml files, all we have to do on a pressCommand
     is DIVINE_ENTITY:ReceptorPressed(self) and we can lookup what arrow that
     actor is, and broadcast accordingly.
     --]]
-    function DIVINE_ENTITY:RegisterReceptor(direction, actor)
-    
+    function DIVINE_ENTITY:RegisterReceptor(direction, actor)    
         --Case 1: P1 _XOR_ P2. We know exactly who the receptors belong to.
         if GAMESTATE:IsPlayerEnabled(PLAYER_1) and not GAMESTATE:IsPlayerEnabled(PLAYER_2) then
             self.receptors[PLAYER_1][direction] = actor
@@ -89,7 +124,7 @@
     Initially I wanted this to only return the Over and Under sprites. But there is a weird issue
     where those sprites do some strange stuff if they get far away from their initial position.
     
-    So what this unfortunately means is this function behaves a bit different to the others.
+    So what this unfortunately means is I can't use the generic GetActor function.
     
     If you give it JUST a direction, it returns the actor frame, so it can be moved nicely.
     If you give it at least sprite, then it will return the sprite actor itself.
@@ -142,107 +177,72 @@
     
     function DIVINE_ENTITY:ReceptorHitNote(actor, TNS)
         local prefix = string.sub(self.receptorsLookupTable[tostring(actor)].name, 1, 2)
-        Trace('Broadcasting: ' .. prefix .. TNS)
         MESSAGEMAN:Broadcast(prefix .. TNS)
     end
+        
+    --------------------------------------
+    ---Functions for resgistering notes---
+    --------------------------------------
     
-    function DIVINE_ENTITY:RegisterNote (noteType, name, actor)
+    --This function is for all the other note register functions to wrap around.
+    function DIVINE_ENTITY:RegisterNote(noteType, name, actor)
         if self.notes[noteType] == nil then
             self.notes[noteType] = {}
         end
 
         self.notes[noteType][name] = actor
     end
-	
+    
+    --[[
+    DIVINE_ENTITY provides these wrappers to make code neater in other xml files. 
+    
+    It looks nicer to call RegisterTapNote inside a Tap Note xml file, rather than the
+    generic RegisterNote function. Plus we can forget about the noteType arguement.
+    --]]
+    function DIVINE_ENTITY:RegisterTapNote(name, actor) DIVINE_ENTITY:RegisterNote(self.NOTE_TYPE_TAP, name, actor) end
+    function DIVINE_ENTITY:RegisterActiveHoldHead(name, actor) DIVINE_ENTITY:RegisterNote(self.NOTE_TYPE_HOLD_HEAD_ACTIVE, name, actor) end
+    function DIVINE_ENTITY:RegisterInactiveHoldHead(name, actor) DIVINE_ENTITY:RegisterNote(self.NOTE_TYPE_HOLD_HEAD_INACTIVE, name, actor) end
+    function DIVINE_ENTITY:RegisterActiveRollHead(name, actor) DIVINE_ENTITY:RegisterNote(self.NOTE_TYPE_ROLL_HEAD_ACTIVE, name, actor) end
+    function DIVINE_ENTITY:RegisterInactiveRollHead(name, actor) DIVINE_ENTITY:RegisterNote(self.NOTE_TYPE_ROLL_HEAD_INACTIVE, name, actor) end
+    
+    -------------------------------
+    --Functions for getting notes--
+    -------------------------------
+    
+    --Wrapper around GetActors, more functions wrap around this
     function DIVINE_ENTITY:GetNotes(noteType, direction, quant, clone)        
-        local arrows = {}
-        local mt = { __index = self.catch }
-
-        setmetatable(arrows, mt)
-
-        --No string.match in Lua 5.0 :[
-        for name,actor in pairs(self.notes[noteType]) do                      
-            if direction and quant and clone then                               
-                if string.find(name, direction .. ' ' .. noteType .. ' ' .. quant .. ' ' .. clone) then arrows[name] = actor end
-            elseif direction and quant then
-                if string.find(name, direction) and string.find(name, quant) then arrows[name] = actor end
-            elseif direction and clone then
-                if string.find(name, direction) and string.find(name, clone) then arrows[name] = actor end
-            elseif quant and clone then
-                if string.find(name, quant) and string.find(name, clone) then arrows[name] = actor end
-            elseif direction then
-                if string.find(name, direction) then arrows[name] = actor end 
-            elseif quant then
-                if string.find(name, quant) then arrows[name] = actor end 
-            elseif clone then
-                if string.find(name, clone) then arrows[name] = actor end 
-            else
-                arrows[name] = actor
-            end
-            
-        end    
-
-        return arrows
-    end
-       
-    function DIVINE_ENTITY:RegisterTapNote(name, actor)
-        DIVINE_ENTITY:RegisterNote(self.NOTE_TYPE_TAP, name, actor)
-    end
-      
-    function DIVINE_ENTITY:GetTapNotes(direction, quant, clone)
-        return DIVINE_ENTITY:GetNotes(self.NOTE_TYPE_TAP, direction, quant, clone) 
-    end 
-    
-    function DIVINE_ENTITY:RegisterActiveHoldHead(name, actor)    
-        DIVINE_ENTITY:RegisterNote(self.NOTE_TYPE_HOLD_HEAD_ACTIVE, name, actor)
+        local nameParams = {direction, quant, clone}
+        return self:GetActors(self.notes[noteType], nameParams)
     end
     
-    function DIVINE_ENTITY:GetActiveHoldHeads(direction, quant)
-        return DIVINE_ENTITY:GetNotes(self.NOTE_TYPE_HOLD_HEAD_ACTIVE, direction, quant)
-    end
+    --These functions are provided to make code simple and easy to read in simfiles.
+    function DIVINE_ENTITY:GetTapNotes(direction, quant, clone) return DIVINE_ENTITY:GetNotes(self.NOTE_TYPE_TAP, direction, quant, clone) end      
+    function DIVINE_ENTITY:GetActiveHoldHeads(direction, quant) return DIVINE_ENTITY:GetNotes(self.NOTE_TYPE_HOLD_HEAD_ACTIVE, direction, quant) end   
+    function DIVINE_ENTITY:GetInactiveHoldHeads(direction, quant) return DIVINE_ENTITY:GetNotes(self.NOTE_TYPE_HOLD_HEAD_INACTIVE, direction, quant) end 
+    function DIVINE_ENTITY:GetActiveRollHeads(direction, quant) return DIVINE_ENTITY:GetNotes(self.NOTE_TYPE_ROLL_HEAD_ACTIVE, direction, quant) end    
+    function DIVINE_ENTITY:GetInactiveRollHeads(direction, quant) return DIVINE_ENTITY:GetNotes(self.NOTE_TYPE_ROLL_HEAD_INACTIVE, direction, quant) end
+        
+    --------------------------------
+    --Misc other NoteSkin elements--
+    --------------------------------
     
-    function DIVINE_ENTITY:RegisterInactiveHoldHead(name, actor)    
-        DIVINE_ENTITY:RegisterNote(self.NOTE_TYPE_HOLD_HEAD_INACTIVE, name, actor)
-    end
-    
-    function DIVINE_ENTITY:GetInactiveHoldHeads(direction, quant)
-        return DIVINE_ENTITY:GetNotes(self.NOTE_TYPE_HOLD_HEAD_INACTIVE, direction, quant)
-    end 
-    
-    function DIVINE_ENTITY:RegisterActiveRollHead(name, actor)    
-        DIVINE_ENTITY:RegisterNote(self.NOTE_TYPE_ROLL_HEAD_ACTIVE, name, actor)
-    end
-    
-    function DIVINE_ENTITY:GetActiveRollHeads(direction, quant)
-        return DIVINE_ENTITY:GetNotes(self.NOTE_TYPE_ROLL_HEAD_ACTIVE, direction, quant)
-    end
-    
-    function DIVINE_ENTITY:RegisterInactiveRollHead(name, actor)    
-        DIVINE_ENTITY:RegisterNote(self.NOTE_TYPE_ROLL_HEAD_INACTIVE, name, actor)
-    end
-    
-    function DIVINE_ENTITY:GetInactiveRollHeads(direction, quant)
-        return DIVINE_ENTITY:GetNotes(self.NOTE_TYPE_ROLL_HEAD_INACTIVE, direction, quant)
-    end
-    
-    function DIVINE_ENTITY:RegisterMine(name, actor)
-        self.mines[name] = actor
-    end
+    --[[
+    The code for mines and explosions is so simple at this stage that it
+    can just be grouped here. The code for mines may get a bit more complex
+    as it seems you can have mines for different quants (eg Left Tap Mine 8th)
+    --]]
+    function DIVINE_ENTITY:RegisterMine(name, actor) self.mines[name] = actor end
     
     function DIVINE_ENTITY:GetMines(direction)
-        local direction = direction or ''
-        local mines = {}
-        local mt = { __index = self.catch }
-        
-        setmetatable(mines,mt)
-        
-        for name,actor in pairs(self.mines) do
-            if string.find(name, direction) then mines[name] = actor end            
-        end
-        
-        return mines
+        local nameParams = {direction}
+        return self:GetActors(self.mines, nameParams)
     end
     
+    --[[
+    This was structured the same way as Get/RegisterNotes because it seemed like it may
+    be possible to swap out hold explosions and other elements. Turns out it's not,
+    but it is good practice to keep these kind of things generic and expandable.
+    --]]
     function DIVINE_ENTITY:RegisterExplosion(noteType, name, actor)
         if self.explosions[noteType] == nil then
             self.explosions[noteType] = {}
@@ -250,56 +250,19 @@
 
         self.explosions[noteType][name] = actor
     end
-    
-    --[[
-    This is very similar to GetTapNotes but with explosions we have an extra thing to match.
-    If I was smart I might refactor these functions in to one (but even then, that might be too
-    messy. For now I don't have time so this has to do
-    --]]
+
     function DIVINE_ENTITY:GetExplosions(noteType, direction, explosionType, TNS)
-        --local direction = direction or ''
-        --local explosionType = explosionType or ''
-        --local TNS = TNS or ''
-        
-        local explosions = {}
-        local mt = { __index = self.catch }
-
-        setmetatable(explosions, mt)
-
-        --No string.match in Lua 5.0 :[
-        --I can think of a really nice way to generalise this idea but I really don't have time to play around implementing it :[
-        for name,actor in pairs(self.explosions[noteType]) do
-            if direction and explosionType and TNS then                               
-                if string.find(name, direction .. ' ' .. noteType .. ' Explosion ' .. explosionType .. ' ' .. TNS) then explosions[name] = actor end
-            elseif direction and explosionType then
-                if string.find(name, direction) and string.find(name, explosionType) then explosions[name] = actor end
-            elseif direction and TNS then
-                if string.find(name, direction) and string.find(name, TNS) then explosions[name] = actor end
-            elseif explosionType and TNS then
-                if string.find(name, TNS) and string.find(name, explosionType) then explosions[name] = actor end
-            elseif direction then
-                if string.find(name, direction) then explosions[name] = actor end 
-            elseif explosionType then
-                if string.find(name, explosionType) then explosions[name] = actor end 
-            elseif TNS then
-                if string.find(name, TNS) then explosions[name] = actor end 
-            else
-                explosions[name] = actor
-            end
-        end    
-
-        --I fixed the explosions :]
-        return explosions
+        local nameParams = {direction, explosionType, TNS}
+        return self:GetActors(self.explosions[noteType], nameParams) --I fixed the explosions.
     end
     
-    function DIVINE_ENTITY:RegisterTapExplosion(name, actor)
-        DIVINE_ENTITY:RegisterExplosion(self.EXPLOSION_NOTE_TYPE_TAP, name, actor)
-    end
+    function DIVINE_ENTITY:RegisterTapExplosion(name, actor) DIVINE_ENTITY:RegisterExplosion(self.EXPLOSION_TYPE_TAP, name, actor) end
     
     function DIVINE_ENTITY:GetTapExplosions(direction, explosionType, TNS)
-        return DIVINE_ENTITY:GetExplosions(self.EXPLOSION_NOTE_TYPE_TAP, direction, explosionType, TNS)
+        return DIVINE_ENTITY:GetExplosions(self.EXPLOSION_TYPE_TAP, direction, explosionType, TNS)
     end    
 end">
+
 <children>
     <Actor File='sprites/4th.sprite'
         InitCommand='%function (self)
