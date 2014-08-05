@@ -28,16 +28,6 @@
         HNS_OK='OK',
         HNS_NG='NG'
     }
-
-    function DIVINE_ENTITY:GetMetricCallback(section, command)
-        return self.metrics[section][command]
-    end
-    
-    function DIVINE_ENTITY:SetMetricCallback(section, command, callback)
-        self.metrics[section][command] = callback
-    end
-    
-    DIVINE_ENTITY:SetMetricCallback('GhostArrowDim', 'Marvelous', function(actor) actor:diffusealpha(1.2) actor:zoom(1.1) actor:accelerate(0.15) actor:zoom(1.0) actor:diffusealpha(0) actor:glowshift() actor:effectperiod(0.05) actor:effectcolor1(1,1,1,0) actor:effectcolor2(1,1,1,0.5) end)
     
     ------------------------------
     --Generic reusable functions--
@@ -272,7 +262,43 @@
     
     function DIVINE_ENTITY:GetTapExplosions(direction, explosionType, TNS)
         return DIVINE_ENTITY:GetExplosions(self.EXPLOSION_TYPE_TAP, direction, explosionType, TNS)
-    end    
+    end
+    
+    -----------------------------------------
+    --Stuff for overriding NoteSkin metrics--
+    -----------------------------------------
+    
+    function DIVINE_ENTITY:GetMetricCallback(section, command)
+        return self.metrics[section][command]
+    end
+    
+    function DIVINE_ENTITY:SetMetricCallback(section, command, callback)
+        self.metrics[section][command] = callback
+    end
+    
+    --Set up defaults
+    for k,section in pairs({'GhostArrowDim', 'GhostArrowBright'}) do
+        DIVINE_ENTITY:SetMetricCallback(section, 'None', function(actor) return nil end)
+        DIVINE_ENTITY:SetMetricCallback(section, 'HitMine', function(actor) actor:blend(add) actor:diffuse(1,1,1,1) actor:zoom(1) actor:rotationz(0) actor:linear(0.2) actor:rotationz(90) actor:linear(0.2) actor:rotationz(180) actor:diffusealpha(0) end)
+        DIVINE_ENTITY:SetMetricCallback(section, 'Miss', function(actor) return nil end)
+        DIVINE_ENTITY:SetMetricCallback(section, 'Boo', function(actor) actor:diffusealpha(1.2) actor:zoom(1.1) actor:accelerate(0.15) actor:zoom(1.0) actor:diffusealpha(0) end)
+        DIVINE_ENTITY:SetMetricCallback(section, 'Good', function(actor) actor:diffusealpha(1.2) actor:zoom(1.1) actor:accelerate(0.15) actor:zoom(1.0) actor:diffusealpha(0) end)
+        DIVINE_ENTITY:SetMetricCallback(section, 'Great', function(actor) actor:diffusealpha(1.2) actor:zoom(1.1) actor:accelerate(0.15) actor:zoom(1.0) actor:diffusealpha(0) end)
+        DIVINE_ENTITY:SetMetricCallback(section, 'Perfect', function(actor) actor:diffusealpha(1.2) actor:zoom(1.1) actor:accelerate(0.15) actor:zoom(1.0) actor:diffusealpha(0) end)
+        DIVINE_ENTITY:SetMetricCallback(section, 'Marvelous', function(actor) actor:diffusealpha(1.2) actor:zoom(1.1) actor:accelerate(0.15) actor:zoom(1.0) actor:diffusealpha(0) actor:glowshift() actor:effectperiod(0.05) actor:effectcolor1(1,1,1,0) actor:effectcolor2(1,1,1,0.5) end)
+        DIVINE_ENTITY:SetMetricCallback(section, 'NG', function(actor) return nil end)
+        DIVINE_ENTITY:SetMetricCallback(section, 'OK', function(actor) return nil end)
+    end
+    
+    DIVINE_ENTITY:SetMetricCallback('HoldGhostArrow', 'On', function(actor) actor:glowshift() actor:effectperiod(0.05) actor:effectcolor1(1,1,1,0) actor:effectcolor2(1,1,1,0.5) end)
+    
+    DIVINE_ENTITY:SetMetricCallback('ReceptorArrow', 'None', function(actor) actor:zoon(0.75) actor:linear(0.066) actor:zoom(1) end)
+    DIVINE_ENTITY:SetMetricCallback('ReceptorArrow', 'Miss', function(actor) return nil end)
+    DIVINE_ENTITY:SetMetricCallback('ReceptorArrow', 'Boo', function(actor) return nil end)
+    DIVINE_ENTITY:SetMetricCallback('ReceptorArrow', 'Good', function(actor) return nil end)
+    DIVINE_ENTITY:SetMetricCallback('ReceptorArrow', 'Great', function(actor) return nil end)
+    DIVINE_ENTITY:SetMetricCallback('ReceptorArrow', 'Perfect', function(actor) return nil end)
+    DIVINE_ENTITY:SetMetricCallback('ReceptorArrow', 'Marvelous', function(actor) return nil end)
 end">
 
 <children>
