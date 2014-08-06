@@ -292,7 +292,7 @@
     
     DIVINE_ENTITY:SetMetricCallback('HoldGhostArrow', 'On', function(actor) actor:glowshift() actor:effectperiod(0.05) actor:effectcolor1(1,1,1,0) actor:effectcolor2(1,1,1,0.5) end)
     
-    DIVINE_ENTITY:SetMetricCallback('ReceptorArrow', 'None', function(actor) actor:zoon(0.75) actor:linear(0.066) actor:zoom(1) end)
+    DIVINE_ENTITY:SetMetricCallback('ReceptorArrow', 'None', function(actor) actor:zoom(0.75) actor:linear(0.066) actor:zoom(1) end)
     DIVINE_ENTITY:SetMetricCallback('ReceptorArrow', 'Miss', function(actor) return nil end)
     DIVINE_ENTITY:SetMetricCallback('ReceptorArrow', 'Boo', function(actor) return nil end)
     DIVINE_ENTITY:SetMetricCallback('ReceptorArrow', 'Good', function(actor) return nil end)
