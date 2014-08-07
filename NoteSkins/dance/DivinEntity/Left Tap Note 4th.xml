@@ -279,7 +279,7 @@
     --Set up defaults
     for k,section in pairs({'GhostArrowDim', 'GhostArrowBright'}) do
         DIVINE_ENTITY:SetMetricCallback(section, 'None', function(actor) return nil end)
-        DIVINE_ENTITY:SetMetricCallback(section, 'HitMine', function(actor) actor:blend(add) actor:diffuse(1,1,1,1) actor:zoom(1) actor:rotationz(0) actor:linear(0.2) actor:rotationz(90) actor:linear(0.2) actor:rotationz(180) actor:diffusealpha(0) end)
+        DIVINE_ENTITY:SetMetricCallback(section, 'HitMine', function(actor) actor:blend('add') actor:diffuse(1,1,1,1) actor:zoom(1) actor:rotationz(0) actor:linear(0.2) actor:rotationz(90) actor:linear(0.2) actor:rotationz(180) actor:diffusealpha(0) end)
         DIVINE_ENTITY:SetMetricCallback(section, 'Miss', function(actor) return nil end)
         DIVINE_ENTITY:SetMetricCallback(section, 'Boo', function(actor) actor:diffusealpha(1.2) actor:zoom(1.1) actor:accelerate(0.15) actor:zoom(1.0) actor:diffusealpha(0) end)
         DIVINE_ENTITY:SetMetricCallback(section, 'Good', function(actor) actor:diffusealpha(1.2) actor:zoom(1.1) actor:accelerate(0.15) actor:zoom(1.0) actor:diffusealpha(0) end)
