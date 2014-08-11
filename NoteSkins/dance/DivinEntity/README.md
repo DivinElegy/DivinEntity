@@ -92,42 +92,36 @@ _void_ **SetMetricCallback(section, command, callback)** - Set ```callback``` as
 Get all tap arrows:
 ```Lua
 DIVINE_ENTITY:getTapArrows()
-
 ```
 
 Get all tap arrows associated with the direction 'Down':
 
 ```Lua
 DIVINE_ENTITY:getTapArrows('Down')
-
 ```
 
 Get all tap arrows associated with the quantity 16th:
 
 ```Lua
 DIVINE_ENTITY:getTapArrows(nil, '16th')
-
 ```
 
 Get only Left Tap Note 64th:
 
 ```Lua
 DIVINE_ENTITY:getTapArrows('Left', '64th')
-
 ```
 
 Reload the sprite for all actors associated with the direction 'Left':
 
 ```Lua
 DIVINE_ENTITY:getTapArrows('Left'):Load('mySprite.sprite')
-
 ```
 
 Chain commands using the fluent interface:
 
 ```Lua
 DIVINE_ENTITY:getTapArrows():linear(300):rotationz(7200)
-
 ```
 
 Create a player controlled actor:
@@ -153,7 +147,6 @@ Create a player controlled actor:
         self:queuecommand('Update');
     end"
 />
-
 ```
 
 Create a cool effect with the clones:
