@@ -4,9 +4,9 @@ This NoteSkin sets up a Lua object (well, table really) called DIVINE_ENTITY, wh
 DIVINE_ENTITY is essential a registry of actors accessed through simple methods. It does all the hard work of figuring out which player an actor belongs to, as well as some extra Lua magic to provide an easy API for running commands on multiple actors.
 
 #Implementation
-The implementation of the Divine Entity is reasonably simple. To the best of my knowledge, the first XML file loaded from the DivinEntity NoteSkin is [Left Tap Note 4th.xml](https://github.com/DivinElegy/DivinEntity-Noteskin/blob/de-wip/NoteSkins/dance/DivinEntity/Left%20Tap%20Note%204th.xml). This is the file where the majority of implementation takes place. DIVINE_ENTITY is a global Lua object with some methods to make life easy.
+The implementation of the Divine Entity is reasonably simple. To the best of my knowledge, the first XML file loaded from the DivinEntity NoteSkin is [Left Tap Note 4th.xml](https://github.com/DivinElegy/DivinEntity-Noteskin/blob/master/NoteSkins/dance/DivinEntity/Left%20Tap%20Note%204th.xml). This is the file where the majority of implementation takes place. DIVINE_ENTITY is a global Lua object with some methods to make life easy.
 
-The way that DIVINE_ENTITY knows about NoteSkin actors is through the "register" methods. In the vast majority of XML files there is something like this sample from [Down Tap Note 16th.xml](https://github.com/DivinElegy/DivinEntity-Noteskin/blob/de-wip/NoteSkins/dance/DivinEntity/Down%20Tap%20Note%2016th.xml):
+The way that DIVINE_ENTITY knows about NoteSkin actors is through the "register" methods. In the vast majority of XML files there is something like this sample from [Down Tap Note 16th.xml](https://github.com/DivinElegy/DivinEntity-Noteskin/blob/master/NoteSkins/dance/DivinEntity/Down%20Tap%20Note%2016th.xml):
 
 ```XML
 <Actor
