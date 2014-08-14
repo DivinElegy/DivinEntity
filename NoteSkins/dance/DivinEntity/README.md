@@ -91,20 +91,31 @@ _void_ **SetMetricCallback(section, command, callback)** - Set ```callback``` as
 The NoteSkin also broadcasts messages on certain events. Below is a summary.
 
 **StepP1LeftPressedMessageCommand** - Broadcast when player 1 steps on the left receptor.
+
 **StepP1DownPressedMessageCommand** - Broadcast when player 1 steps on the down receptor.
+
 **StepP1UpPressedMessageCommand** - Broadcast when player 1 steps on the up receptor.
+
 **StepP1RightPressedMessageCommand** - Broadcast when player 1 steps on the right receptor.
 
 **StepP1LeftLiftedMessageCommand** - Broadcast when player 1 lifts off the left receptor.
+
 **StepP1DownLiftedMessageCommand** - Broadcast when player 1 lifts off the down receptor.
+
 **StepP1UpLiftedMessageCommand** - Broadcast when player 1 lifts off the up receptor.
+
 **StepP1RightLiftedMessageCommand** - Broadcast when player 1 lifts off the right receptor.
 
 **P1FantasticMessageCommand** - Broadcast when player 1 gets a Fantastic.
+
 **P1ExcellentMessageCommand** - Broadcast when player 1 gets an Excellent.
+
 **P1GreatMessageCommand** - Broadcast when player 1 gets a Great.
+
 **P1DecentMessageCommand** - Broadcast when player 1 gets a Decent.
+
 **P1WayOffMessageCommand** - Broadcast when player 1 gets a WayOff.
+
 **P1HitMineMessageCommand** - Broadcast when player 1 hits a mine.
 
 The same commands exist for player 2, you just substitute P1 with P2.
