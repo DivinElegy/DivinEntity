@@ -85,12 +85,12 @@ Below is a list of message commands the NoteSkin broadcasts.
 **StepP1UpLiftedMessageCommand** - Broadcast when player 1 lifts off the up receptor.
 **StepP1RightLiftedMessageCommand** - Broadcast when player 1 lifts off the right receptor.
 
-**P1FantasticMessageCommand** - Broadcast when player 1 gets a Fantastic.
-**P1ExcellentMessageCommand** - Broadcast when player 1 gets an Excellent.
-**P1GreatMessageCommand** - Broadcast when player 1 gets a Great.
-**P1DecentMessageCommand** - Broadcast when player 1 gets a Decent.
-**P1WayOffMessageCommand** - Broadcast when player 1 gets a WayOff.
-**P1HitMineMessageCommand** - Broadcast when player 1 hits a mine.
+**P1FantasticMessageCommand** - Broadcast when player 1 gets a Fantastic. 
+**P1ExcellentMessageCommand** - Broadcast when player 1 gets an Excellent. 
+**P1GreatMessageCommand** - Broadcast when player 1 gets a Great. 
+**P1DecentMessageCommand** - Broadcast when player 1 gets a Decent. 
+**P1WayOffMessageCommand** - Broadcast when player 1 gets a WayOff. 
+**P1HitMineMessageCommand** - Broadcast when player 1 hits a mine. 
 
 The same commands exist for player 2, you just substitute P1 with P2.
 
