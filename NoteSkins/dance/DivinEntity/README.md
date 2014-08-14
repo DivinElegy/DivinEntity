@@ -121,39 +121,39 @@ The NoteSkin also broadcasts messages on certain events. Below is a summary.
 The same commands exist for player 2, you just substitute P1 with P2.
 
 #Usage Examples
-Get all tap arrows:
+Get all tap notes:
 ```Lua
-DIVINE_ENTITY:getTapArrows()
+DIVINE_ENTITY:GetTapNotes()
 ```
 
-Get all tap arrows associated with the direction 'Down':
+Get all tap notes associated with the direction 'Down':
 
 ```Lua
-DIVINE_ENTITY:getTapArrows('Down')
+DIVINE_ENTITY:GetTapNotes('Down')
 ```
 
-Get all tap arrows associated with the quantity 16th:
+Get all tap notes associated with the quantity 16th:
 
 ```Lua
-DIVINE_ENTITY:getTapArrows(nil, '16th')
+DIVINE_ENTITY:GetTapNotes(nil, '16th')
 ```
 
 Get only Left Tap Note 64th:
 
 ```Lua
-DIVINE_ENTITY:getTapArrows('Left', '64th')
+DIVINE_ENTITY:GetTapNotes('Left', '64th')
 ```
 
 Reload the sprite for all actors associated with the direction 'Left':
 
 ```Lua
-DIVINE_ENTITY:getTapArrows('Left'):Load('mySprite.sprite')
+DIVINE_ENTITY:GetTapNotes('Left'):Load('mySprite.sprite')
 ```
 
 Chain commands using the fluent interface:
 
 ```Lua
-DIVINE_ENTITY:getTapArrows():linear(300):rotationz(7200)
+DIVINE_ENTITY:GetTapNotes():linear(300):rotationz(7200)
 ```
 
 Create a player controlled actor:
@@ -175,7 +175,7 @@ Create a player controlled actor:
         if DIVINE_ENTITY:IsReceptorPressed('Right', PLAYER_1) then self:addx(1) end
         if DIVINE_ENTITY:IsReceptorPressed('Left', PLAYER_1) then self:addx(-1) end
 
-        self:sleep(0.0166666666);
+        self:sleep(0.01);
         self:queuecommand('Update');
     end"
 />
