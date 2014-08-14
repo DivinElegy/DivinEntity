@@ -168,12 +168,12 @@ Create a player controlled actor:
 
     UpdateCommand="%function(self)
         --up/down
-        if DIVINE_ENTITY:isReceptorPressed('Down', PLAYER_1) then self:addy(1)  end
-        if DIVINE_ENTITY:isReceptorPressed('Up', PLAYER_1) then self:addy(-1) end
+        if DIVINE_ENTITY:IsReceptorPressed('Down', PLAYER_1) then self:addy(1)  end
+        if DIVINE_ENTITY:IsReceptorPressed('Up', PLAYER_1) then self:addy(-1) end
 
         --left/right
-        if DIVINE_ENTITY:isReceptorPressed('Right', PLAYER_1) then self:addx(1) end
-        if DIVINE_ENTITY:isReceptorPressed('Left', PLAYER_1) then self:addx(-1) end
+        if DIVINE_ENTITY:IsReceptorPressed('Right', PLAYER_1) then self:addx(1) end
+        if DIVINE_ENTITY:IsReceptorPressed('Left', PLAYER_1) then self:addx(-1) end
 
         self:sleep(0.0166666666);
         self:queuecommand('Update');
