@@ -29,28 +29,28 @@ Will load mySprite and cause all the notes to vibrate.
 
 The functions always return as many actors as possible based on their arguments. Here are specific examples for GetTapNotes:
 
-Get all tap arrows:
+Get all tap notes:
 
 ```Lua
-DIVINE_ENTITY:getTapArrows()
+DIVINE_ENTITY:GetTapNotes()
 ```
 
-Get all tap arrows associated with the direction 'Down':
+Get all tap notes associated with the direction 'Down':
 
 ```Lua
-DIVINE_ENTITY:getTapArrows('Down')
+DIVINE_ENTITY:GetTapNotes('Down')
 ```
 
-Get all tap arrows associated with the quantity 16th:
+Get all tap notes associated with the quantity 16th:
 
 ```Lua
-DIVINE_ENTITY:getTapArrows(nil, '16th')
+DIVINE_ENTITY:GetTapNotes(nil, '16th')
 ```
 
 Get only Left Tap Note 64th:
 
 ```Lua
-DIVINE_ENTITY:getTapArrows('Left', '64th')
+DIVINE_ENTITY:GetTapNotes('Left', '64th')
 ```
 
 #Functions
