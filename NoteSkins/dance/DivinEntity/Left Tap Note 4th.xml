@@ -287,7 +287,7 @@
         DIVINE_ENTITY:SetMetricCallback(section, 'Perfect', function(actor) actor:diffusealpha(1.2) actor:zoom(1.1) actor:accelerate(0.15) actor:zoom(1.0) actor:diffusealpha(0) end)
         DIVINE_ENTITY:SetMetricCallback(section, 'Marvelous', function(actor) actor:diffusealpha(1.2) actor:zoom(1.1) actor:accelerate(0.15) actor:zoom(1.0) actor:diffusealpha(0) actor:glowshift() actor:effectperiod(0.05) actor:effectcolor1(1,1,1,0) actor:effectcolor2(1,1,1,0.5) end)
         DIVINE_ENTITY:SetMetricCallback(section, 'NG', function(actor) return nil end)
-        DIVINE_ENTITY:SetMetricCallback(section, 'OK', function(actor) actor:finishtweening() actor:diffusealpha(1.2) actor:zoom(1.1) actor:accelerate(0.09_ actor:zoom(1.0) actor:diffusealpha(0) end)
+        DIVINE_ENTITY:SetMetricCallback(section, 'OK', function(actor) actor:finishtweening() actor:diffusealpha(1.2) actor:zoom(1.1) actor:accelerate(0.09) actor:zoom(1.0) actor:diffusealpha(0) end)
     end
     
     DIVINE_ENTITY:SetMetricCallback('HoldGhostArrow', 'On', function(actor) actor:glowshift() actor:effectperiod(0.05) actor:effectcolor1(1,1,1,0) actor:effectcolor2(1,1,1,0.5) end)
