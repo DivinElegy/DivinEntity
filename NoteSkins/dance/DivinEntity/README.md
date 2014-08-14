@@ -25,7 +25,7 @@ Most functions are defined using : syntax. e.g., ```DIVINE_ENTITY:GetActors```, 
 
 Every Get function returns a table with a fluent interface, allowing you to chain actor functions on a single line.
 
-```TNS``` always refers to the tap note score names used internally by StepMania, e.g., "Marvelous", "Perfect" etc.
+```TNS``` **usually** refers to the tap note score names used internally by StepMania, e.g., "Marvelous", "Perfect" etc. However in ```ReceptorHitNote``` it can really be whatever you like, as that function simply broadcasts a message command using the value of ```TNS```.
 
 Some of these functions are designed to be used internally. **THESE MAY CHANGE IN THE FUTURE**. However, all the functions that expose elements of the NoteSkin out, i.e., all the Get functions, will never change to ensue maximum backwards compatibility in the future.
 
@@ -51,15 +51,15 @@ _void_ **ReceptorHitNote(actor, TNS)** - Respond to ```actor``` hitting a note w
 
 _void_ ***RegisterNote(noteType, name, actor)*** - Register ```actor``` in the notes table as a ```noteType``` with name ```name```. Other register functions wrap around this one.
 
-_void_ **RegisterTapNote(name, actor)** - Wrapper around ```RegisterNote```. Registers ```actor``` as the note associated with ```name````.
+_void_ **RegisterTapNote(name, actor)** - Wrapper around ```RegisterNote```. Registers ```actor``` as the note associated with ```name```.
 
-_void_ **RegisterActiveHoldHead(name, actor)** - Wrapper around ```RegisterNote```. Registers ```actor``` as the active hold head associated with ```name````.
+_void_ **RegisterActiveHoldHead(name, actor)** - Wrapper around ```RegisterNote```. Registers ```actor``` as the active hold head associated with ```name```.
 
-_void_ **RegisterInactiveHoldHead(name, actor)** - Wrapper around ```RegisterNote```. Registers ```actor``` as the inactive hold head associated with ```name````.
+_void_ **RegisterInactiveHoldHead(name, actor)** - Wrapper around ```RegisterNote```. Registers ```actor``` as the inactive hold head associated with ```name```.
 
-_void_ **RegisterActiveRollHead(name, actor)** - Wrapper around ```RegisterNote```. Registers ```actor``` as the active roll head associated with ```name````.
+_void_ **RegisterActiveRollHead(name, actor)** - Wrapper around ```RegisterNote```. Registers ```actor``` as the active roll head associated with ```name```.
 
-_void_ **RegisterInactiveRollHead(name, actor)** - Wrapper around ```RegisterNote```. Registers ```actor``` as the inactive roll head associated with ```name````.
+_void_ **RegisterInactiveRollHead(name, actor)** - Wrapper around ```RegisterNote```. Registers ```actor``` as the inactive roll head associated with ```name```.
 
 _table_ **GetNotes(noteType, direction, quant, clone)** - Wrapper around ```GetActors```. Returns a table of notes of type ```noteType``` associated with ```direction```, ```quant``` and ```clone```.
 
@@ -87,6 +87,27 @@ _function_ **GetMetricCallback(section, command)** - Return the callback registe
 
 _void_ **SetMetricCallback(section, command, callback)** - Set ```callback``` as the callback function for the metric in section ```section``` and command ```command```.
 
+#Message Commands
+The NoteSkin also broadcasts messages on certain events. Below is a summary.
+
+**StepP1LeftPressedMessageCommand** - Broadcast when player 1 steps on the left receptor.
+**StepP1DownPressedMessageCommand** - Broadcast when player 1 steps on the down receptor.
+**StepP1UpPressedMessageCommand** - Broadcast when player 1 steps on the up receptor.
+**StepP1RightPressedMessageCommand** - Broadcast when player 1 steps on the right receptor.
+
+**StepP1LeftLiftedMessageCommand** - Broadcast when player 1 lifts off the left receptor.
+**StepP1DownLiftedMessageCommand** - Broadcast when player 1 lifts off the down receptor.
+**StepP1UpLiftedMessageCommand** - Broadcast when player 1 lifts off the up receptor.
+**StepP1RightLiftedMessageCommand** - Broadcast when player 1 lifts off the right receptor.
+
+**P1FantasticMessageCommand** - Broadcast when player 1 gets a Fantastic.
+**P1ExcellentMessageCommand** - Broadcast when player 1 gets an Excellent.
+**P1GreatMessageCommand** - Broadcast when player 1 gets a Great.
+**P1DecentMessageCommand** - Broadcast when player 1 gets a Decent.
+**P1WayOffMessageCommand** - Broadcast when player 1 gets a WayOff.
+**P1HitMineMessageCommand** - Broadcast when player 1 hits a mine.
+
+The same commands exist for player 2, you just substitute P1 with P2.
 
 #Usage Examples
 Get all tap arrows:

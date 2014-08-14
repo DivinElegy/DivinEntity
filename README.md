@@ -72,6 +72,28 @@ Below is a list of functions you can use to access and modify NoteSkin elements:
 
 In each function, ```direction``` can be one of "Up", "Down", "Left" and "Right" and ```quant``` can be any note quantity from "4th" to "192nd". In ```GetTapExplosions```, ```explosionType``` can be either "Dim" or "Bright" (bright explosions occur when the player's combo is above 100) and ```TNS``` can be one of "Marvelous", "Perfect", "Great", "Good", "Boo", "Miss" or "HitMine".
 
+#Message Commands
+Below is a list of message commands the NoteSkin broadcasts.
+
+**StepP1LeftPressedMessageCommand** - Broadcast when player 1 steps on the left receptor.
+**StepP1DownPressedMessageCommand** - Broadcast when player 1 steps on the down receptor.
+**StepP1UpPressedMessageCommand** - Broadcast when player 1 steps on the up receptor.
+**StepP1RightPressedMessageCommand** - Broadcast when player 1 steps on the right receptor.
+
+**StepP1LeftLiftedMessageCommand** - Broadcast when player 1 lifts off the left receptor.
+**StepP1DownLiftedMessageCommand** - Broadcast when player 1 lifts off the down receptor.
+**StepP1UpLiftedMessageCommand** - Broadcast when player 1 lifts off the up receptor.
+**StepP1RightLiftedMessageCommand** - Broadcast when player 1 lifts off the right receptor.
+
+**P1FantasticMessageCommand** - Broadcast when player 1 gets a Fantastic.
+**P1ExcellentMessageCommand** - Broadcast when player 1 gets an Excellent.
+**P1GreatMessageCommand** - Broadcast when player 1 gets a Great.
+**P1DecentMessageCommand** - Broadcast when player 1 gets a Decent.
+**P1WayOffMessageCommand** - Broadcast when player 1 gets a WayOff.
+**P1HitMineMessageCommand** - Broadcast when player 1 hits a mine.
+
+The same commands exist for player 2, you just substitute P1 with P2.
+
 #Contributing
 If you feel you have something of value to add to this project, _please_ make a fork under your own GitHub account, then send a pull request. This is the best way to keep track of changes and give credit where credit is due. Thanks.
 
