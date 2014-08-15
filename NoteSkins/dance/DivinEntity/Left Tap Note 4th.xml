@@ -45,7 +45,11 @@
             tick = 1;
             for i,v in pairs(arg) do
                 if type(v) ~= 'table' then
-                    paramsToPassOn[tick] = v
+                    if type(v) == "string" then
+                        paramsToPassOn[tick] = '\'' .. v .. '\''
+                    else
+                        paramsToPassOn[tick] = v
+                    end
                     tick = tick+1
                 end
             end
@@ -53,7 +57,7 @@
             for i,v in pairs(arg[1]) do
                 --This is the worst hack ever and I am not proud of it.
                 _G['DivinEntity_f2r'] = v
-                funcstr = '_G[\'DivinEntity_f2r\']:' .. key .. '(\'' .. unpack(paramsToPassOn) .. '\')';
+                funcstr = '_G[\'DivinEntity_f2r\']:' .. key .. '(\'' .. table.concat(paramsToPassOn,',') .. '\')';
                 assert(loadstring(funcstr))()                                
             end
             
