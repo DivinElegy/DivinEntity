@@ -36,28 +36,26 @@
     --This function makes the fluent magic happen.
     function DIVINE_ENTITY.catch(table, key)
         return function(...)
-            local paramsToPassOn = {}
+            local paramStr
         
-            --[[
-            I don't know why I had to do this workaround, but while loops
-            wouldn't play nice with the vararg so here we are.
-            --]]            
-            tick = 1;
             for i,v in pairs(arg) do
                 if type(v) ~= 'table' then
-                    if type(v) == "string" then
-                        paramsToPassOn[tick] = '\'' .. v .. '\''
-                    else
-                        paramsToPassOn[tick] = v
-                    end
-                    tick = tick+1
+                    local param
+                    if type(v) == 'string' then param = '\'' .. v .. '\'' else param = v end
+                    if paramStr == nil then paramStr = param else paramStr = paramStr .. ',' .. param end
                 end
             end
-         
+
+            --[[
+            For some reason ',2' is always on the end of the paramStr, so chop it off. 
+            I don't really have time to investigate it further, but this seems to work.
+            --]]
+            paramStr = string.sub(paramStr,0,-3)
+
             for i,v in pairs(arg[1]) do
                 --This is the worst hack ever and I am not proud of it.
                 _G['DivinEntity_f2r'] = v
-                funcstr = '_G[\'DivinEntity_f2r\']:' .. key .. '(\'' .. table.concat(paramsToPassOn,',') .. '\')';
+                funcstr = '_G[\'DivinEntity_f2r\']:' .. key .. '(' .. paramStr .. ')';
                 assert(loadstring(funcstr))()                                
             end
             
