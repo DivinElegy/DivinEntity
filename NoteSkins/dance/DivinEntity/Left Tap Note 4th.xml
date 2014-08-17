@@ -296,6 +296,7 @@
     
     DIVINE_ENTITY:SetMetricCallback('ReceptorArrow', 'None', function(actor) actor:zoom(0.75) actor:linear(0.066) actor:zoom(1) end)
     DIVINE_ENTITY:SetMetricCallback('ReceptorArrow', 'Miss', function(actor) return nil end)
+    DIVINE_ENTITY:SetMetricCallback('ReceptorArrow', 'HitMine', function(actor) return nil end)
     DIVINE_ENTITY:SetMetricCallback('ReceptorArrow', 'Boo', function(actor) return nil end)
     DIVINE_ENTITY:SetMetricCallback('ReceptorArrow', 'Good', function(actor) return nil end)
     DIVINE_ENTITY:SetMetricCallback('ReceptorArrow', 'Great', function(actor) return nil end)
