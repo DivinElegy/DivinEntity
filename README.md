@@ -53,6 +53,15 @@ Get only Left Tap Note 64th:
 DIVINE_ENTITY:GetTapNotes('Left', '64th')
 ```
 
+#Installation
+To install the NoteSkin follow these steps:
+
+1. Download the NoteSkin using the "Download ZIP" button to the right.
+2. Extract the zip to your desktop (or wherever else you'd like).
+3. Copy the NoteSkins directory to the _root_ of your OpenITG/SM install. For example if you have OpenITG installed in C:\Program Files\OpenITG, simply copy the NoteSkins folder from the zip in to C:\Program Files\OpenITG
+
+Windows might prompt you about an existing NoteSkins folder. Make sure you tell it to _merge_ the two folders.
+
 #Functions
 Below is a list of functions you can use to access and modify NoteSkin elements:
 
