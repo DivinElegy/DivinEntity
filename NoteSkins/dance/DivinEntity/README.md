@@ -21,7 +21,7 @@ The way that DIVINE_ENTITY knows about NoteSkin actors is through the "register"
 Using this technique DIVINE_ENTITY becomes a registry of every NoteSkin actor.
 
 #Usage
-Most functions are defined using : syntax. e.g., ```DIVINE_ENTITY:GetActors```, but catch and find are defined using . syntax. : syntax automatically passes a ```self``` parameter to the function, however this is not needed in the case of  ```catch``` and ```contains```.
+Most functions are defined using : syntax. e.g., ```DIVINE_ENTITY:GetActors```, but ```catch``` and ```contains``` are defined using . syntax. : syntax automatically passes a ```self``` parameter to the function, however this is not needed in the case of  ```catch``` and ```contains```.
 
 Every Get function returns a table with a fluent interface, allowing you to chain actor functions on a single line.
 
